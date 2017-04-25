@@ -2,6 +2,7 @@ package com.mbm.ftn.mbm.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 
 import com.mbm.ftn.mbm.R;
@@ -28,6 +29,9 @@ public class ImportantNumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_important_numbers);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //emergency numbers
         listViewNumbersEmergency = (ListView) findViewById(R.id.listViewNumbersEmergency);
         final List<Number> numbersListEmergency = new ArrayList<>();
@@ -49,8 +53,6 @@ public class ImportantNumbersActivity extends AppCompatActivity {
 
         adapter =  new NumberAdapter(this, numbersListOperators);
         listViewNumbersMobileOperators.setAdapter(adapter);
-
-
 
     }
 
