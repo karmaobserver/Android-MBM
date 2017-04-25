@@ -17,7 +17,7 @@ import com.mbm.ftn.mbm.R;
  * Created by Milos on 4/4/2017.
  */
 @SuppressWarnings("deprecation")
-public class Compass extends AppCompatActivity implements SensorEventListener {
+public class CompassActivity extends AppCompatActivity implements SensorEventListener {
 
     // imageview
     private ImageView image;

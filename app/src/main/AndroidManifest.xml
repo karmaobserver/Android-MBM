@@ -10,15 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-
-        <!-- pristup kameri,blicu, senzorima  -->
+        <!-- pristup kameri,blicu, senzorima -->
         <uses-permission android:name="android.permission.CAMERA" />
         <uses-permission android:name="android.permission.FLASHLIGHT" />
+
         <uses-feature android:name="android.hardware.camera" />
         <uses-feature android:name="android.hardware.camera.flash" />
-        <uses-feature android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-        <uses-feature android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+        <uses-feature android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-feature android:name="android.permission.ACCESS_FINE_LOCATION" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -27,17 +26,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Flashlight2Activity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".activities.Flashlight2Activity"
             android:label="Lampa"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".activities.Compass"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".activities.CompassActivity"
             android:label="Kompas"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.SurvivalTextActivity"
+            android:label="@string/title_activity_survival_text"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".activities.ImportantNumbersActivity"
+            android:screenOrientation="portrait"
+            android:label="Važni brojevi"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

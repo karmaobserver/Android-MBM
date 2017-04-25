@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="topics_entries">
+        <item>Uvod</item>
+        <item>Psihologija preživljavanja</item>
+        <item>Planiranje i oprema</item>
+        <item>Skrovište</item>
+    </string-array>
+
+    <string-array name="topics_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="text_entries">
+        <item>Text Uvod</item>
+        <item>Text Psihologija preživljavanja</item>
+        <item>Text Planiranje i oprema</item>
+        <item>Text Skrovište</item>
+    </string-array>
+
+    <string-array name="text_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+</resources>

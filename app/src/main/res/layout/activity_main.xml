@@ -99,7 +99,9 @@
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY"
+            android:background="#FFFFFF"
+            android:src="@drawable/survival"/>
         <ImageButton
             android:id="@+id/button_bottomright"
             android:layout_width="0dp"
