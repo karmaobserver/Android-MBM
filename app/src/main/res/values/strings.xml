@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MBM</string>
+    <string name="numbers_emergency_services">Hitne službe</string>
+    <string name="numbers_mobile_operators">Mobilna telefonija</string>
 </resources>
