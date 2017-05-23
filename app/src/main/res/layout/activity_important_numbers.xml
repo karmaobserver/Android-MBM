@@ -1,40 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_important_numbers"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient_color">
 
     <!-- Load the toolbar here -->
     <include
         layout="@layout/toolbar_main"
+        android:id="@+id/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/textEmergency"
+    <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="@string/numbers_emergency_services"
-        style="@style/NumberTitle"/>
+        android:orientation="horizontal"
+        android:layout_below="@+id/tools">
 
-    <ListView
-        android:id="@+id/listViewNumbersEmergency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_select_city"
+            android:background="@drawable/button"
+            android:textColor="@color/color_white"
 
-    <TextView
-        android:id="@+id/textMobileOperators"
-        android:layout_width="match_parent"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_serbia"
+            android:background="@drawable/button"
+            android:textColor="@color/color_white"/>
+
+        <Button
+            android:id="@+id/button_all_numbers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_all_numbers"
+            android:background="@drawable/button"
+            android:textColor="@color/color_white"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/numbers_mobile_operators"
-        style="@style/NumberTitle"/>
+        android:layout_below="@id/buttons"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="70sp">
+
+        <Button
+            android:id="@+id/button_emergency"
+            android:layout_width="160sp"
+            android:layout_height="80sp"
+            android:textSize="@dimen/font_huge"
+            android:text="@string/number_emergency"
+            android:layout_marginRight="10sp"
+            android:layout_marginBottom="5sp"
+            android:paddingLeft="25sp"
+           />
+
+        <Button
+            android:id="@+id/button_police"
+            android:layout_width="160sp"
+            android:layout_height="80sp"
+            android:layout_toRightOf="@+id/button_emergency"
+            android:textSize="@dimen/font_huge"
+            android:text="@string/number_police"
+            android:paddingLeft="25sp"/>
+
+        <Button
+            android:id="@+id/button_firefighers"
+            android:layout_width="160sp"
+            android:layout_height="80sp"
+            android:layout_below="@+id/button_emergency"
+            android:textSize="@dimen/font_huge"
+            android:text="@string/number_firefighters"
+            android:paddingLeft="25sp"/>
+
+        <Button
+            android:id="@+id/button_mountain_rescue_service"
+            android:layout_width="160sp"
+            android:layout_height="80sp"
+            android:layout_toRightOf="@+id/button_emergency"
+            android:layout_below="@+id/button_emergency"
+            android:textSize="@dimen/font_huge"
+            android:text="@string/number_mountain_service"
+            android:paddingLeft="25sp"/>
 
 
-    <ListView
-        android:id="@+id/listViewNumbersMobileOperators"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+    </RelativeLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

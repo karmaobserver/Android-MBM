@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">MBM</string>
     <string name="title_activity_survival_text">SurvivalText</string>
+
+    <!--Important numbers strings -->
     <string name="numbers_emergency_services">Hitne službe</string>
     <string name="numbers_mobile_operators">Mobilna telefonija</string>
+    <string name="numbers_health_care">Zdravstvo</string>
+
+    <string name="number_police">192</string>
+    <string name="number_firefighters">193</string>
+    <string name="number_emergency">194</string>
+    <string name="number_mountain_service">112</string>
+
+    <string name="button_all_numbers">Svi brojevi</string>
+    <string name="button_serbia">Srbija</string>
+    <string name="button_select_city">Izaberite grad</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nesto">Nesto</string>
 </resources>
