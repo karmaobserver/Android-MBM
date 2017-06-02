@@ -16,10 +16,10 @@
     </string-array>
 
     <string-array name="text_entries">
-        <item>Text Uvod</item>
-        <item>Text Psihologija preživljavanja</item>
-        <item>Text Planiranje i oprema</item>
-        <item>Text Skrovište</item>
+        <item>Text Uvod If you are in a combat situation, find a place where you can conceal yourself from the enemy. Remember, security takes priority. Use your senses of hearing, smell, and sight to get a feel for the battlefield. What is the enemy doing? Advancing? Holding in place? Retreating? You will have to consider what is developing on the battlefield when you make your survival plan.</item>
+        <item>Text Psihologija preživljavanja It takes much more than the knowledge and skills to build shelters, get food, make fires, and travel without the aid of standard navigational devices to live successfully through a survival situation. Some people with little or no survival training have managed to survive life-threatening circumstances. Some people with survival training have not used their skills and died.</item>
+        <item>Text Planiranje i oprema Detailed prior planning is essential in potential survival situations. Including survival considerations in mission planning will enhance your chances of survival if an emergency occurs. For example, if your job re-quires that you work in a small, enclosed area that limits what you can carry on your person, plan where you can put your rucksack or your load-bearing equipment.</item>
+        <item>Text Skrovište Foremost among the many problems that can compromise ability to return to safety are medical problems resulting from parachute descent and landing, extreme climates, ground combat, evasion, and illnesses contracted in captivity.</item>
     </string-array>
 
     <string-array name="text_values">

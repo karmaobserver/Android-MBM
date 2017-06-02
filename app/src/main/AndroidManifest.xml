@@ -56,6 +56,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.TextActivity"
+            android:label="@string/title_activity_survival_text"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.SurvivalTextActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
         <activity android:name=".activities.ImportantNumbersActivity"
             android:screenOrientation="portrait"
             android:label="Važni brojevi"

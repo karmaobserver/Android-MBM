@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
+import com.mbm.ftn.mbm.models.SurvivalText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     //pressure
     private Dao<Number, Integer> numberDao = null;
     private Dao<NumberList, Integer> numberListDao = null;
+    private Dao<SurvivalText, Integer> survivalTextDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -96,6 +98,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return numberDao;
+    }
+
+    public Dao<SurvivalText, Integer> getSurvivalTextDao() {
+        if (null == survivalTextDao) {
+            try {
+                survivalTextDao = getDao(SurvivalText.class);
+            }catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return survivalTextDao;
     }
 
     public Dao<NumberList, Integer> getNumberListDao() {
