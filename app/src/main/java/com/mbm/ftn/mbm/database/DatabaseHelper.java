@@ -9,6 +9,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.SurvivalText;
@@ -26,11 +27,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "MbmDB.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 43;
+    private static final int DATABASE_VERSION = 54;
 
     // the DAO object we use to access the SimpleData table
     //pressure
     private Dao<Number, Integer> numberDao = null;
+    private Dao<City, Integer> cityDao = null;
     private Dao<NumberList, Integer> numberListDao = null;
     private Dao<SurvivalText, Integer> survivalTextDao = null;
 
@@ -41,6 +43,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
+            TableUtils.createTable(connectionSource, City.class);
             TableUtils.createTable(connectionSource, NumberList.class);
             TableUtils.createTable(connectionSource, Number.class);
         } catch (SQLException e) {
@@ -77,6 +80,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                           int oldVersion, int newVersion) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
+            TableUtils.dropTable(connectionSource, City.class, true);
             TableUtils.dropTable(connectionSource, NumberList.class, true);
             TableUtils.dropTable(connectionSource, Number.class, true);
             // after we drop the old databases, we create the new ones
@@ -98,6 +102,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return numberDao;
+    }
+
+    public Dao<City, Integer> getCityDao() {
+        if (null == cityDao) {
+            try {
+                cityDao = getDao(City.class);
+            }catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return cityDao;
     }
 
     public Dao<SurvivalText, Integer> getSurvivalTextDao() {

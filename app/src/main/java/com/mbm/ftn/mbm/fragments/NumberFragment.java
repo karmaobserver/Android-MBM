@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +88,8 @@ public class NumberFragment extends Fragment {
         recyclerView.setAdapter(numberAdapter);
 
         String numberListType = getArguments().getString("numberType");
+        String city = getArguments().getString("city");
+
         Log.d(TAG, numberListType);
         title = (TextView) view.findViewById(R.id.title);
 
@@ -94,31 +97,16 @@ public class NumberFragment extends Fragment {
         numberDao = new NumberDao(getContext());
         numberListDao = new NumberListDao(getContext());
 
-        if (numberListType == getResources().getString(R.string.numbers_emergency_services)) {
-            title.setText(getActivity().getResources().getString(R.string.numbers_emergency_services));
-           /* List<Number> numbers = numberDao.findAll();
-            Log.d("NUMBERS", "Numbers: " + numbers.size());
-            List<NumberList> numbersLists = numberListDao.findAll();
-            Log.d("NUMBERSLISTS", "NumbersLists: " + numbersLists.size());*/
-            numberList.clear();
-            numberList.addAll(numberDao.findAllbyListName(getResources().getString(R.string.numbers_emergency_services)));
-            numberAdapter.notifyDataSetChanged();
+        title.setText(numberListType);
+        numberList.clear();
 
-        } else if (numberListType == getResources().getString(R.string.numbers_mobile_operators)){
-            title.setText(getActivity().getResources().getString(R.string.numbers_mobile_operators));
-            numberList.clear();
-            numberList.addAll(numberDao.findAllbyListName(getResources().getString(R.string.numbers_mobile_operators)));
-            numberAdapter.notifyDataSetChanged();
-        } else if (numberListType == getResources().getString(R.string.numbers_health_care)){
-            title.setText(getActivity().getResources().getString(R.string.numbers_health_care));
-            numberList.clear();
-            numberList.addAll(numberDao.findAllbyListName(getResources().getString(R.string.numbers_health_care)));
-            numberAdapter.notifyDataSetChanged();
+        if (city.equals("none")) {
+            numberList.addAll(numberDao.findAllbyListName(numberListType));
         } else {
-            title.setText(getActivity().getResources().getString(R.string.numbers_mobile_operators));
-           // prepareMovieData();
+            numberList.addAll(numberDao.findAllByCityAndListName(city, numberListType));
         }
 
+        numberAdapter.notifyDataSetChanged();
 
        /* moviesAdapter.setOnItemClickListener(new MoviesAdapter.MyViewHolder.ClickListener() {
             @Override

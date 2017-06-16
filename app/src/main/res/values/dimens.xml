@@ -9,14 +9,14 @@
     <dimen name="font_tiny">6sp</dimen>
 
     <!-- margin sizes -->
-    <dimen name="margin_medium">10sp</dimen>
-    <dimen name="margin_small">4sp</dimen>
-    <dimen name="margin_very_small">3sp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_very_small">3dp</dimen>
 
     <!-- margin sizes -->
-    <dimen name="icon_size_large">32sp</dimen>
-    <dimen name="icon_size_medium">24sp</dimen>
-    <dimen name="icon_size_small">16sp</dimen>
+    <dimen name="icon_size_large">32dp</dimen>
+    <dimen name="icon_size_medium">24dp</dimen>
+    <dimen name="icon_size_small">16dp</dimen>
 </resources>
 
 

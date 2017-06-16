@@ -52,13 +52,13 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
             website = (TextView) view.findViewById(R.id.website);
             address = (TextView) view.findViewById(R.id.address);
             view.setOnClickListener(this);
-            number.setOnClickListener(this);
+            //number.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (v instanceof TextView) {
-                clickListener.onTextItemClick(getAdapterPosition(), (TextView) v);
+                //clickListener.onTextItemClick(getAdapterPosition(), (TextView) v);
             } else {
                 clickListener.onItemClick(getAdapterPosition(), v);
             }
@@ -67,7 +67,7 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
         public interface ClickListener {
             void onItemClick(int position, View v);
 
-            void onTextItemClick(int position, TextView v);
+            //void onTextItemClick(int position, TextView v);
         }
     }
     /////////////////////////////////////End of inner class///////////////////////////////////////////
@@ -110,16 +110,14 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
                 numberPickedDialog.show(fragmentManager, "showNumberPickedDialogTAG");
             }
 
-            @Override
+            /*@Override
             public void onTextItemClick(int position, TextView v) {
                 Toast.makeText(v.getContext(),  "Text is selected!", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         });
 
         return viewHolder;
     }
-
-
 
 
     @Override

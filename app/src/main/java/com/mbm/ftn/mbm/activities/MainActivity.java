@@ -17,9 +17,11 @@ import com.mbm.ftn.mbm.activities.Flashlight2Activity;
 import com.mbm.ftn.mbm.activities.ImportantNumbersActivity;
 import com.mbm.ftn.mbm.activities.SurvivalTextActivity;
 import com.mbm.ftn.mbm.activities.WeatherActivity;
+import com.mbm.ftn.mbm.dao.CityDao;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
 import com.mbm.ftn.mbm.database.DatabaseManager;
+import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     NumberDao numberDao = null;
     NumberListDao numberListDao = null;
+    CityDao cityDao = null;
     Number number = null;
     NumberList numberList = null;
 
@@ -141,29 +144,39 @@ public class MainActivity extends AppCompatActivity {
 
         numberDao = new NumberDao(this);
         numberListDao = new NumberListDao(this);
+        cityDao = new CityDao(this);
 
+        City city1 = new City("Beograd");
+        City city2 = new City("Novi Sad");
+        City city3 = new City("Srbija");
+        City city4 = new City("Niš");
+
+        cityDao.create(city1);
+        cityDao.create(city2);
+        cityDao.create(city3);
+        cityDao.create(city4);
 
         NumberList emergencyList = new NumberList(getResources().getString(R.string.numbers_emergency_services));
         numberListDao.create(emergencyList);
-        Number number1 = new Number("Hitna pomoć", "194", "Hitne intervencije hitne pomoći", emergencyList, null, null);
-        Number number2 = new Number("Policija", "192", "Hitne intervencije policije", emergencyList, "http://www.mup.vladars.net/", null);
-        Number number3 = new Number("Vatrogasci", "193", null, emergencyList, null, "Omladinskih brigada 1, Beograd");
-        Number number4 = new Number("Gorska služba", "194", "Gorska služba spašavanja", emergencyList, "http://www.gss.rs/", "Ruzveltova 18, Zvezdara");
+        Number number1 = new Number("Hitna pomoć", "194", "Hitne intervencije hitne pomoći", emergencyList, null, null, city2);
+        Number number2 = new Number("Policija", "192", "Hitne intervencije policije", emergencyList, "http://www.mup.vladars.net/", null, city1);
+        Number number3 = new Number("Vatrogasci", "193", null, emergencyList, null, "Omladinskih brigada 1, Beograd", city1);
+        Number number4 = new Number("Gorska služba", "194", "Gorska služba spašavanja", emergencyList, "http://www.gss.rs/", "Ruzveltova 18, Zvezdara", city1);
 
 
         NumberList mobileOperatorsList = new NumberList(getResources().getString(R.string.numbers_mobile_operators));
         numberListDao.create(mobileOperatorsList);
-        Number number5 = new Number("Vip mobile", "+381601234", null, mobileOperatorsList, null, null);
-        Number number6 = new Number("Telenor", "+3816390000", null, mobileOperatorsList, null, null);
-        Number number7 = new Number("MTS", "+38164789", null, mobileOperatorsList, "https://www.mts.rs/", "Branislava Nusića");
+        Number number5 = new Number("Vip mobile", "+381601234", null, mobileOperatorsList, null, null, city2);
+        Number number6 = new Number("Telenor", "+3816390000", null, mobileOperatorsList, null, null, city3);
+        Number number7 = new Number("MTS", "+38164789", null, mobileOperatorsList, "https://www.mts.rs/", "Branislava Nusića", city2);
 
 
         NumberList healthCare = new NumberList(getResources().getString(R.string.numbers_health_care));
         numberListDao.create(healthCare);
-        Number number8 = new Number("Dom zdravlja Liman", "+381214807187", null, healthCare, null, null);
-        Number number9 = new Number("Dom zdravlja bistrica", "+38121401122", null, healthCare, null, null);
-        Number number10 = new Number("Kliničko bolnički centar", "+381214843484", null, healthCare, null, null);
-        Number number11 = new Number("Dečja bolnija", "+38121422699", "Bolnica za decu", healthCare, null, null);
+        Number number8 = new Number("Dom zdravlja Liman", "+381214807187", null, healthCare, null, null, city2);
+        Number number9 = new Number("Dom zdravlja bistrica", "+38121401122", null, healthCare, null, null, city1);
+        Number number10 = new Number("Kliničko bolnički centar", "+381214843484", null, healthCare, null, null, city2);
+        Number number11 = new Number("Dečja bolnija", "+38121422699", "Bolnica za decu", healthCare, null, null, city2);
        /* Number number8 = new Number("Automoto Savez Srbije", "987", "Pomoć na putu, stanje na putevima, međunarodna dokumenta, saobraćajna...", healthCare);
         Number number9 = new Number("Aerodorom Nikola Tesla", "+381112094444", null, healthCare);
         Number number10 = new Number("Aerodrom Konstantin Veliki", "+38118585858", null, healthCare);

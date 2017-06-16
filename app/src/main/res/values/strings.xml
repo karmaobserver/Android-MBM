@@ -16,6 +16,8 @@
     <string name="button_serbia">Srbija</string>
     <string name="button_select_city">Izaberite grad</string>
 
+    <string name="dialog_title_choose_city">Odaberite grad</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nesto">Nesto</string>
 </resources>

@@ -20,24 +20,17 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
+            android:id="@+id/linear_for_fragments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <FrameLayout
-                android:id="@+id/numbers_emergency_services"
+                android:id="@+id/fragment_container_number_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <FrameLayout
-                android:id="@+id/numbers_health_care"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
-            <FrameLayout
-                android:id="@+id/numbers_mobile_operators"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </ScrollView>

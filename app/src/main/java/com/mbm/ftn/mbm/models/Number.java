@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class Number extends BaseModel implements Serializable{
 
     public static final String NUMBERLIST_FIELD_NAME = "number_list";
+    public static final String CITY_FIELD_NAME = "city";
 
     @DatabaseField
     private String title;
@@ -31,16 +32,20 @@ public class Number extends BaseModel implements Serializable{
     @DatabaseField
     private String address;
 
+    @DatabaseField(foreign=true,foreignAutoRefresh=true, columnName = CITY_FIELD_NAME)
+    private City city;
+
     public Number() {
     }
 
-    public Number(String title, String number, String description, NumberList numberList, String website, String address) {
+    public Number(String title, String number, String description, NumberList numberList, String website, String address, City city) {
         this.title = title;
         this.number = number;
         this.description = description;
         this.numberList = numberList;
         this.website = website;
         this.address = address;
+        this.city = city;
     }
 
     public String getTitle() {
@@ -91,6 +96,14 @@ public class Number extends BaseModel implements Serializable{
         this.address = address;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "Number{" +
@@ -100,6 +113,7 @@ public class Number extends BaseModel implements Serializable{
                 ", numberList=" + numberList +
                 ", website='" + website + '\'' +
                 ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 }

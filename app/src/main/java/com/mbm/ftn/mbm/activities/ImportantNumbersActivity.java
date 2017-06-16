@@ -13,12 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.j256.ormlite.table.TableUtils;
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
+import com.mbm.ftn.mbm.dialogs.ChooseCityDialog;
+import com.mbm.ftn.mbm.dialogs.NumberPickedDialog;
 import com.mbm.ftn.mbm.fragments.NumberFragment;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
@@ -38,6 +41,8 @@ public class ImportantNumbersActivity extends BaseActivity {
     Number number = null;
     NumberList numberList = null;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +60,33 @@ public class ImportantNumbersActivity extends BaseActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(v.getContext(), NumbersActivity.class);
+                intent.putExtra("city", "none");
                 startActivity(intent);
+            }
+        });
+
+        Button countryButton = (Button) findViewById(R.id.button_country);
+        countryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(v.getContext(), NumbersActivity.class);
+                intent.putExtra("city", "Srbija");
+                startActivity(intent);
+            }
+        });
+
+        Button cityButton = (Button) findViewById(R.id.button_city);
+        cityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("titleName", getResources().getString(R.string.dialog_title_choose_city));
+                ChooseCityDialog chooseCityDialog = new ChooseCityDialog();
+                chooseCityDialog.setArguments(bundle);
+                android.support.v4.app.FragmentManager fragmentManager = (ImportantNumbersActivity.this).getSupportFragmentManager();
+                chooseCityDialog.show(fragmentManager, "showChooseCityDialogTAG");
             }
         });
 

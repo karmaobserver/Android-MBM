@@ -8,6 +8,7 @@ import com.j256.ormlite.stmt.Where;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
+import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
 
@@ -27,16 +28,37 @@ public class NumberDao implements Crud {
         helper = DatabaseManager.getInstance().getHelper();
     }
 
+    //sve brojeve za zeljenu listu na osnovu imena
     public List<Number> findAllbyListName(String numberListName) {
 
         List<Number> results = null;
 
         try {
-
             QueryBuilder<NumberList, Integer> numberListQb = helper.getNumberListDao().queryBuilder();
             numberListQb.where().eq(NumberList.NUMBERLIST_NAME_FIELD_NAME, numberListName);
             QueryBuilder<Number, Integer> numberQb = helper.getNumberDao().queryBuilder();
             results = numberQb.join(numberListQb).query();
+            Log.d("REZULTAT", "JE: " + results.size());
+        } catch (SQLException e) {
+            Log.d("REZULTAT", "JE: CATCH");
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public List<Number> findAllByCityAndListName(String city, String numberListName) {
+
+        List<Number> results = null;
+
+        try {
+            QueryBuilder<Number, Integer> numberQb = helper.getNumberDao().queryBuilder();
+            QueryBuilder<City, Integer> cityQb = helper.getCityDao().queryBuilder();
+            QueryBuilder<NumberList, Integer> numberListQb = helper.getNumberListDao().queryBuilder();
+
+            cityQb.where().eq(City.CITY_NAME_FIELD_NAME, city);
+            numberListQb.where().eq(NumberList.NUMBERLIST_NAME_FIELD_NAME, numberListName);
+            results = numberQb.join(numberListQb).join(cityQb).query();
             Log.d("REZULTAT", "JE: " + results.size());
         } catch (SQLException e) {
             Log.d("REZULTAT", "JE: CATCH");
