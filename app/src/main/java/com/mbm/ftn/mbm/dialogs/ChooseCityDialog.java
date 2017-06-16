@@ -38,14 +38,10 @@ import java.util.List;
 public class ChooseCityDialog extends DialogFragment {
 
     private static final String ARG_PARAM1 = "titleName";
-    private static final String ARG_PARAM2 = "number";
-    private static final String ARG_PARAM3 = "website";
-    private static final String ARG_PARAM4 = "address";
+
 
     private String param1;
-    private String param2;
-    private String param3;
-    private String param4;
+
 
     private RecyclerView recyclerView;
     private List<City> cityList = new ArrayList<>();
@@ -64,9 +60,6 @@ public class ChooseCityDialog extends DialogFragment {
         ChooseCityDialog fragment = new ChooseCityDialog();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        args.putString(ARG_PARAM3, param3);
-        args.putString(ARG_PARAM4, param4);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,9 +68,7 @@ public class ChooseCityDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getArguments() != null) {
             param1 = getArguments().getString(ARG_PARAM1);
-            param2 = getArguments().getString(ARG_PARAM2);
-            param2 = getArguments().getString(ARG_PARAM3);
-            param2 = getArguments().getString(ARG_PARAM4);
+
         }
         return inflater.inflate(R.layout.dialog_choose_city, container);
     }
@@ -89,14 +80,12 @@ public class ChooseCityDialog extends DialogFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("titleName");
-        String number = getArguments().getString("number");
-        String website = getArguments().getString("website");
-        String address = getArguments().getString("address");
 ;
         getDialog().setTitle(title);
 
         cityDao = new CityDao(getContext());
-        cityList = cityDao.findAll();
+        cityList = cityDao.findAllExpectCountry();
+
 
         //add adapter to dialog
         cityAdapter = new CityAdapter(cityList);

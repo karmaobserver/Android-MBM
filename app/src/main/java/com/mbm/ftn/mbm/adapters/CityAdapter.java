@@ -1,7 +1,12 @@
 package com.mbm.ftn.mbm.adapters;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.activities.ImportantNumbersActivity;
 import com.mbm.ftn.mbm.activities.NumbersActivity;
+import com.mbm.ftn.mbm.dialogs.ChooseCityDialog;
 import com.mbm.ftn.mbm.dialogs.NumberPickedDialog;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
@@ -77,6 +84,14 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
                 intent.putExtra("city", name.getText().toString());
                 Log.d("CITY", "JE U ADAPTERU " + name.getText().toString());
                 v.getContext().startActivity(intent);
+              /*  android.support.v4.app.FragmentManager fragmentManager = ((cont)parent.getContext()).getSupportFragmentManager();
+                Fragment prev = fragmentManager.findFragmentByTag("showChooseCityDialogTAG");
+                if (prev != null) {
+                    DialogFragment df = (DialogFragment) prev;
+                    df.dismiss();
+                }
+*/
+
             }
 
         });

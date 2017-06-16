@@ -8,16 +8,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.j256.ormlite.table.TableUtils;
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.adapters.NumberAdapter;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
 import com.mbm.ftn.mbm.dialogs.ChooseCityDialog;
@@ -25,6 +35,9 @@ import com.mbm.ftn.mbm.dialogs.NumberPickedDialog;
 import com.mbm.ftn.mbm.fragments.NumberFragment;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.mbm.ftn.mbm.R.drawable.button;
 
@@ -39,8 +52,11 @@ public class ImportantNumbersActivity extends BaseActivity {
     NumberDao numberDao = null;
     NumberListDao numberListDao = null;
     Number number = null;
-    NumberList numberList = null;
+    //NumberList numberList = null;
 
+    RecyclerView recyclerView;
+    NumberAdapter numberAdapter;
+    private List<Number> numberList = new ArrayList<>();
 
 
     @Override
@@ -53,6 +69,21 @@ public class ImportantNumbersActivity extends BaseActivity {
 
         getSupportActionBar().setLogo(R.mipmap.ic_important_numbers);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+
+        numberDao = new NumberDao(this);
+        numberList = numberDao.findAll();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_search);
+        numberAdapter = new NumberAdapter(numberList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(numberAdapter);
+
+
 
         Button allNumbersButton = (Button) findViewById(R.id.button_all_numbers);
         allNumbersButton.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +222,76 @@ public class ImportantNumbersActivity extends BaseActivity {
         Button mountainRescueServiceButton = (Button) findViewById(R.id.button_mountain_rescue_service);
         mountainRescueServiceButton.setCompoundDrawables(mountainRescureServiceIcon, null, null, null);
 
+    }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_important_numbers, menu);
+
+        MenuItem search = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        searchView.setQueryHint("Tražite prema imenu ili broju");   //if it gets buggz, use filters in manifest
+        search(searchView);
+
+        MenuItemCompat.setOnActionExpandListener(search, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                RecyclerView recyclerViewSearch = (RecyclerView) findViewById(R.id.recycler_view_search);
+                recyclerViewSearch.setVisibility(View.VISIBLE);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                RecyclerView recyclerViewSearch = (RecyclerView) findViewById(R.id.recycler_view_search);
+                recyclerViewSearch.setVisibility(View.GONE);
+                return true;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.search:
+                /*item.getTitle();
+                Toast.makeText(this, "SEARCH is selected!"+item.getTitle(), Toast.LENGTH_SHORT).show();*/
+                return true;
+
+            case R.id.action_gps:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    private void search(SearchView searchView) {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                numberAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override

@@ -1,12 +1,15 @@
 package com.mbm.ftn.mbm.dao;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
+import com.mbm.ftn.mbm.models.NumberList;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +25,25 @@ public class CityDao implements Crud {
     public CityDao(Context context) {
         DatabaseManager.init(context);
         helper = DatabaseManager.getInstance().getHelper();
+    }
+
+    public List<City> findAllExpectCountry() {
+
+        List<City> results = null;
+
+        try {
+            QueryBuilder<City, Integer> cityQb = helper.getCityDao().queryBuilder();
+
+            cityQb.where().ne(City.CITY_NAME_FIELD_NAME, "Srbija");
+
+            results = cityQb.query();
+            Log.d("REZULTAT", "JE: " + results.size());
+        } catch (SQLException e) {
+            Log.d("REZULTAT", "JE: CATCH");
+            e.printStackTrace();
+        }
+
+        return results;
     }
 
 
