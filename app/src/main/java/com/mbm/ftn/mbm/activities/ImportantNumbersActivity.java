@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -116,6 +117,7 @@ public class ImportantNumbersActivity extends BaseActivity {
                 bundle.putString("titleName", getResources().getString(R.string.dialog_title_choose_city));
                 ChooseCityDialog chooseCityDialog = new ChooseCityDialog();
                 chooseCityDialog.setArguments(bundle);
+                chooseCityDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
                 android.support.v4.app.FragmentManager fragmentManager = (ImportantNumbersActivity.this).getSupportFragmentManager();
                 chooseCityDialog.show(fragmentManager, "showChooseCityDialogTAG");
             }

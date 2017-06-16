@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Database init
         DatabaseManager.init(this);
-        databaseInit();
+        //databaseInit();
 
         // Display icon in the toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);

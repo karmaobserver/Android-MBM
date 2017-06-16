@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.activities.NumbersActivity;
 
 /**
  * Created by Makso on 5/23/2017.
@@ -71,6 +73,20 @@ public class NumberPickedDialog extends DialogFragment {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case 200: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + numberTextView.getText()));
+                    startActivity(callIntent);
+                }
+            }
+        }
+    }
+
+    @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
@@ -105,6 +121,16 @@ public class NumberPickedDialog extends DialogFragment {
             public void onClick(View v) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + numberTextView.getText()));
+
+                //test
+                boolean permissionGranted = ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED;
+                if (permissionGranted) {
+                    startActivity(callIntent);
+                } else {
+                    ActivityCompat.requestPermissions((NumbersActivity)getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+
+                }
+
                 if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -118,6 +144,8 @@ public class NumberPickedDialog extends DialogFragment {
                 startActivity(callIntent);
             }
         });
+
+
 
         ImageButton websiteImageButton = (ImageButton) view.findViewById(R.id.image_button_website);
         websiteImageButton.setOnClickListener(new View.OnClickListener() {

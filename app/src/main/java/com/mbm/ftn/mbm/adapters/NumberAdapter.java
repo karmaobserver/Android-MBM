@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -106,6 +107,7 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.ViewHolder
                 bundle.putString("address", address.getText().toString());
                 NumberPickedDialog numberPickedDialog = new NumberPickedDialog();
                 numberPickedDialog.setArguments(bundle);
+                numberPickedDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
 
                 //Log.d("KONTEKST", "JE" + parent.getContext());
                 //Log.d("KONTEKST", "JEqweqe "+ (NumbersActivity)parent.getContext());
