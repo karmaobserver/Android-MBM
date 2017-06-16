@@ -50,7 +50,7 @@
         <activity
             android:name=".activities.SurvivalTextActivity"
             android:label="@string/title_activity_survival_text"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -59,7 +59,7 @@
         <activity
             android:name=".activities.TextActivity"
             android:label="@string/title_activity_survival_text"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".activities.SurvivalTextActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

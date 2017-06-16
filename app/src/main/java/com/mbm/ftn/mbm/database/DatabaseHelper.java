@@ -27,7 +27,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "MbmDB.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 54;
+    private static final int DATABASE_VERSION = 56;
 
     // the DAO object we use to access the SimpleData table
     //pressure
@@ -46,6 +46,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, City.class);
             TableUtils.createTable(connectionSource, NumberList.class);
             TableUtils.createTable(connectionSource, Number.class);
+            TableUtils.createTable(connectionSource, SurvivalText.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -83,6 +84,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, City.class, true);
             TableUtils.dropTable(connectionSource, NumberList.class, true);
             TableUtils.dropTable(connectionSource, Number.class, true);
+            TableUtils.dropTable(connectionSource, SurvivalText.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {

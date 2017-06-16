@@ -20,10 +20,12 @@ import com.mbm.ftn.mbm.activities.WeatherActivity;
 import com.mbm.ftn.mbm.dao.CityDao;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
+import com.mbm.ftn.mbm.dao.SurvivalTextDao;
 import com.mbm.ftn.mbm.database.DatabaseManager;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
+import com.mbm.ftn.mbm.models.SurvivalText;
 
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     CityDao cityDao = null;
     Number number = null;
     NumberList numberList = null;
+    SurvivalTextDao survivalTextDao = null;
+    SurvivalText survivalText = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Database init
         DatabaseManager.init(this);
-        //databaseInit();
+       // databaseInit();
+
+       // List<SurvivalText> texts = survivalTextDao.findAll();
 
    /*     List<Number> numbers = numberDao.findAll();
         List<NumberList> numbersLists = numberListDao.findAll();
@@ -194,6 +200,19 @@ public class MainActivity extends AppCompatActivity {
         numberDao.create(number10);
         numberDao.create(number11);
 
+        /*Survival Text Database*/
+        //TODO 1. dodati validne podatke i slike
+        survivalTextDao = new SurvivalTextDao(this);
+
+        SurvivalText s1 = new SurvivalText("Uvod", "Text Uvod", "Opis Uvod", R.drawable.compass);
+        SurvivalText s2 = new SurvivalText("Psihologija preživljavanja", "Text Psihologija preživljavanja", "Opis Psihologija preživljavanja", R.drawable.flashlight);
+        SurvivalText s3 = new SurvivalText("Planiranje i oprema", "Text Planiranje i oprema", "Opis Planiranje i oprema", R.drawable.button_shape_important_numbers);
+        SurvivalText s4 = new SurvivalText("Skrovište", "Text Skrovište", "Opis Skrovište", R.drawable.police);
+
+        survivalTextDao.create(s1);
+        survivalTextDao.create(s2);
+        survivalTextDao.create(s3);
+        survivalTextDao.create(s4);
 
         Log.d("DATABASE_INIT", "Database has initilize");
     }

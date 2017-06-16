@@ -5,7 +5,6 @@ import android.content.Context;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
-import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.SurvivalText;
 
 import java.sql.SQLException;
@@ -29,9 +28,9 @@ public class SurvivalTextDao implements Crud{
 
         int index = -1;
 
-        Number object = (Number) item;
+        SurvivalText object = (SurvivalText) item;
         try {
-            index = helper.getNumberDao().create(object);
+            index = helper.getSurvivalTextDao().create(object);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,10 +43,10 @@ public class SurvivalTextDao implements Crud{
 
         int index = -1;
 
-        Number object = (Number) item;
+        SurvivalText object = (SurvivalText) item;
 
         try {
-            helper.getNumberDao().update(object);
+            helper.getSurvivalTextDao().update(object);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,10 +59,10 @@ public class SurvivalTextDao implements Crud{
 
         int index = -1;
 
-        Number object = (Number) item;
+        SurvivalText object = (SurvivalText) item;
 
         try {
-            helper.getNumberDao().delete(object);
+            helper.getSurvivalTextDao().delete(object);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,13 +74,13 @@ public class SurvivalTextDao implements Crud{
     @Override
     public Object findById(int id) {
 
-        Number number = null;
+        SurvivalText survivalText = null;
         try {
-            number = helper.getNumberDao().queryForId(id);
+            survivalText = helper.getSurvivalTextDao().queryForId(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return number;
+        return survivalText;
 
     }
 
