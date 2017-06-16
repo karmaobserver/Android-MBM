@@ -17,6 +17,10 @@
     <dimen name="icon_size_large">32dp</dimen>
     <dimen name="icon_size_medium">24dp</dimen>
     <dimen name="icon_size_small">16dp</dimen>
+
+    <!-- margin sizes for weather -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>
 
 
