@@ -71,7 +71,7 @@ public class ProfilesActivity extends BaseActivity  {
 
         switch (item.getItemId()) {
             case R.id.add:
-                Intent intent = new Intent(this, NumbersActivity.class);
+                Intent intent = new Intent(this, AddProfileActivity.class);
                 startActivity(intent);
                 return true;
 
