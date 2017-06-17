@@ -21,6 +21,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nesto">Nesto</string>
 
+    <!--dialog-->
+    <string name="dialog_title_sos">SOS slanje poruke</string>
+
+
     <!-- Weather conditions label strings -->
     <string name="temperature_with_degree" translatable="false">%s\u00B0</string>
     <string name="wind_label">Vetar: %1$s %2$s</string>

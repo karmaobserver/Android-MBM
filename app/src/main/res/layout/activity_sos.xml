@@ -22,14 +22,13 @@
         class="com.google.android.gms.maps.SupportMapFragment" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_sos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp"
         android:scaleType="center"
         android:src="@drawable/ic_sos" />
-
-
 
 </RelativeLayout>

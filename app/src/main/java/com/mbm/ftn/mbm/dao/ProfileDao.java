@@ -10,6 +10,9 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
+import com.mbm.ftn.mbm.models.City;
+import com.mbm.ftn.mbm.models.Number;
+import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
 
 import java.sql.SQLException;
@@ -125,6 +128,25 @@ public class ProfileDao implements Crud {
 
             return profile;
 
+        }
+
+        public List<Profile> findAllCheckedProfiles() {
+
+            List<Profile> results = null;
+
+            try {
+                QueryBuilder<Profile, Integer> profileQb = helper.getProfileDao().queryBuilder();
+
+                profileQb.where().eq(Profile.CHECKED_FIELD_NAME, true);
+
+                results = profileQb.query();
+                Log.d("REZULTAT", "JE: " + results.size());
+            } catch (SQLException e) {
+                Log.d("REZULTAT", "JE: CATCH");
+                e.printStackTrace();
+            }
+
+            return results;
         }
 
 

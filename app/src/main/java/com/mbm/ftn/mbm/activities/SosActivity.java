@@ -10,11 +10,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -25,33 +29,38 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.dao.ProfileDao;
+import com.mbm.ftn.mbm.dialogs.ChooseCityDialog;
+import com.mbm.ftn.mbm.dialogs.SosDialog;
+import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.utils.PermissionUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by Makso on 6/17/2017.
  */
 
-public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationButtonClickListener,
-        OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback,
-        LocationListener
+    public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationButtonClickListener,
+            OnMapReadyCallback,
+            ActivityCompat.OnRequestPermissionsResultCallback,
+            LocationListener
+    {
 
-{
+        private static final LatLng DARWIN = new LatLng(-12.4258647, 130.7932231);
+        private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
+        private static final int INITIAL_STROKE_WIDTH_PX = 5;
+        private GoogleMap mMap;
+        private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+        private boolean mPermissionDenied = false;
+        private LocationManager locationManager;
+        private ArrayList<LatLng> points; //added
+        Polyline line;
 
-    private static final LatLng DARWIN = new LatLng(-12.4258647, 130.7932231);
-    private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
-    private static final int INITIAL_STROKE_WIDTH_PX = 5;
-    private GoogleMap mMap;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private boolean mPermissionDenied = false;
-    private LocationManager locationManager;
-    private ArrayList<LatLng> points; //added
-    Polyline line;
-
-
+        private List<Profile> profileList = new ArrayList<>();
+        ProfileDao profileDao = null;
 
 
     @Override
@@ -85,15 +94,24 @@ public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationB
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
         }
 
+        //SOS button
+        FloatingActionButton sosButton = (FloatingActionButton) findViewById(R.id.button_sos);
+        sosButton.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
 
+                Bundle bundle = new Bundle();
+                bundle.putString("titleName", getResources().getString(R.string.dialog_title_sos));
+                SosDialog sosDialog = new SosDialog();
+                sosDialog.setArguments(bundle);
+                sosDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+                android.support.v4.app.FragmentManager fragmentManager = (SosActivity.this).getSupportFragmentManager();
+                sosDialog.show(fragmentManager, "showSosDialogTag");
 
-
+            }
+        });
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,8 +168,6 @@ public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationB
 
         mMap.setOnMyLocationButtonClickListener(this);
 
-
-
         enableMyLocation();
         UiSettings uiSettings = map.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
@@ -164,13 +180,7 @@ public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationB
                 .color(Color.BLUE)
                 .geodesic(true));*/
 
-
-
-
-
     }
-
-
 
     /**
      * Enables the My Location layer if the fine location permission has been granted.
@@ -194,9 +204,6 @@ public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationB
         // (the camera animates to the user's current position).
         return false;
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
