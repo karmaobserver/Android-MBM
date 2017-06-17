@@ -1,5 +1,6 @@
 package com.mbm.ftn.mbm.adapters;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.activities.EditProfileActivity;
 import com.mbm.ftn.mbm.activities.ImportantNumbersActivity;
 import com.mbm.ftn.mbm.activities.NumbersActivity;
 import com.mbm.ftn.mbm.dao.NumberDao;
@@ -99,14 +101,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             @Override
             public void onItemClick(int position, View v) {
-                Toast.makeText(v.getContext(), "SHORT is selected!", Toast.LENGTH_SHORT).show();
 
-                TextView title = (TextView) v.findViewById(R.id.title);
+            /*    TextView title = (TextView) v.findViewById(R.id.title);
                 TextView firstName = (TextView) v.findViewById(R.id.firstName);
                 TextView lastName = (TextView) v.findViewById(R.id.lastName);
                 TextView phone = (TextView) v.findViewById(R.id.phone);
                 TextView email = (TextView) v.findViewById(R.id.email);
-                TextView message = (TextView) v.findViewById(R.id.message);
+                TextView message = (TextView) v.findViewById(R.id.message);*/
                 CheckBox checked = (CheckBox) v.findViewById(R.id.checked);
 
                 if (checked.isSelected() || checked.isChecked()) {
@@ -117,36 +118,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     checked.setChecked(true);
                 }
 
-
+                //update to database
                 profileDao = new ProfileDao(parent.getContext());
-
                 try {
                     profileDao.updateChecked((int)getItemId(position), checked.isChecked());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-
-
-                //Pozivanje Dialoga i prosledjivanje parametara
-              /*  Bundle bundle = new Bundle();
-                bundle.putString("titleName", title.getText().toString());
-                bundle.putString("number", number.getText().toString());
-                bundle.putString("website", website.getText().toString());
-                bundle.putString("address", address.getText().toString());
-                NumberPickedDialog numberPickedDialog = new NumberPickedDialog();
-                numberPickedDialog.setArguments(bundle);
-                numberPickedDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
-
-                //Log.d("KONTEKST", "JE" + parent.getContext());
-                //Log.d("KONTEKST", "JEqweqe "+ (NumbersActivity)parent.getContext());
-                if (parent.getContext() instanceof NumbersActivity) {
-                    android.support.v4.app.FragmentManager fragmentManager = ((NumbersActivity) parent.getContext()).getSupportFragmentManager();
-                    numberPickedDialog.show(fragmentManager, "showNumberPickedDialogTAG");
-                } else {
-                    android.support.v4.app.FragmentManager fragmentManager = ((ImportantNumbersActivity) parent.getContext()).getSupportFragmentManager();
-                    numberPickedDialog.show(fragmentManager, "showNumberPickedDialogTAG");
-                }*/
 
             }
 
@@ -162,7 +140,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     Toast.makeText(v.getContext(), "Delete was successful", Toast.LENGTH_SHORT).show();
 
                 } else if (v.getId() == R.id.edit){
-                    Toast.makeText(v.getContext(), "Edit is selected!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(v.getContext(), EditProfileActivity.class);
+                    intent.putExtra("id", (int)getItemId(position));
+                    v.getContext().startActivity(intent);
                 }
             }
 
@@ -183,13 +164,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.email.setText(profile.getEmail());
         holder.message.setText(profile.getMessage());
         holder.checked.setChecked(profile.getChecked());
-       //holder.checked.isSelected(profile.getChecked());
 
-       /* if (number.getDescription() == null || number.getDescription().toString().isEmpty()) {
-            holder.description.setVisibility(View.GONE);
-        } else {
-            holder.description.setVisibility(View.VISIBLE);
-        }*/
     }
 
     @Override

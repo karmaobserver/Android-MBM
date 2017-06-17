@@ -14,23 +14,28 @@ public class Profile extends BaseModel implements Serializable {
 
     public static final String TITLE_FIELD_NAME = "title";
     public static final String CHECKED_FIELD_NAME = "chechked";
+    public static final String FIRSTNAME_FIELD_NAME = "firstName";
+    public static final String LASTNAME_FIELD_NAME = "lastName";
+    public static final String PHONE_FIELD_NAME = "phone";
+    public static final String EMAIL_FIELD_NAME = "email";
+    public static final String MESSAGE_FIELD_NAME = "message";
 
     @DatabaseField(columnName = TITLE_FIELD_NAME)
     private String title;
 
-    @DatabaseField
+    @DatabaseField(columnName = FIRSTNAME_FIELD_NAME)
     private String firstName;
 
-    @DatabaseField
+    @DatabaseField(columnName = LASTNAME_FIELD_NAME)
     private String lastName;
 
-    @DatabaseField
+    @DatabaseField(columnName = PHONE_FIELD_NAME)
     private String phone;
 
-    @DatabaseField
+    @DatabaseField(columnName = EMAIL_FIELD_NAME)
     private String email;
 
-    @DatabaseField
+    @DatabaseField(columnName = MESSAGE_FIELD_NAME)
     private String message;
 
     @DatabaseField(columnName = CHECKED_FIELD_NAME)

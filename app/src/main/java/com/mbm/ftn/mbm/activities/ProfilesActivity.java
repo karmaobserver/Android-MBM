@@ -1,6 +1,9 @@
 package com.mbm.ftn.mbm.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -56,6 +59,9 @@ public class ProfilesActivity extends BaseActivity  {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(profileAdapter);
 
+
+        registerReceiver(broadcast_reciever, new IntentFilter("finish_activity"));
+
     }
 
     @Override
@@ -75,10 +81,6 @@ public class ProfilesActivity extends BaseActivity  {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_gps:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
@@ -87,4 +89,24 @@ public class ProfilesActivity extends BaseActivity  {
 
         }
     }
+
+
+    BroadcastReceiver broadcast_reciever = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("finish_activity")) {
+                finish();
+                // DO WHATEVER YOU WANT.
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(broadcast_reciever);
+        super.onDestroy();
+    }
+
 }

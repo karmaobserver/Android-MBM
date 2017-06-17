@@ -60,10 +60,6 @@ public class SosActivity extends BaseActivity implements OnMapReadyCallback {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_gps:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

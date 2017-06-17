@@ -2,9 +2,6 @@ package com.mbm.ftn.mbm.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,9 +12,11 @@ import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.adapters.ProfileAdapter;
+import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.ProfileDao;
 import com.mbm.ftn.mbm.models.Profile;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +24,9 @@ import java.util.List;
  * Created by Makso on 6/17/2017.
  */
 
-public class AddProfileActivity extends BaseActivity {
+public class EditProfileActivity extends BaseActivity {
 
-    private static final String TAG = "AddProfileActivity";
+    private static final String TAG = "EditProfileActivity";
 
     ProfileDao profileDao = null;
 
@@ -39,7 +38,7 @@ public class AddProfileActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_profile);
+        setContentView(R.layout.activity_edit_profile);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -47,27 +46,55 @@ public class AddProfileActivity extends BaseActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_sos);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+
+        Intent intent = getIntent();
+        Integer id = intent.getIntExtra("id", 1);
+
         profileDao = new ProfileDao(this);
-        profileList = profileDao.findAll();
+        Profile profile = new Profile();
+        try {
+            profile = profileDao.findByIdProfile(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        String title = profile.getTitle();
+        String firstName = profile.getFirstName();
+        String lastName = profile.getLastName();
+        String phone = profile.getPhone();
+        String email = profile.getEmail();
+        String message = profile.getMessage();
 
+        TextView inputTitle = (TextView) findViewById(R.id.input_title);
+        TextView inputFirstName = (TextView) findViewById(R.id.input_first_name);
+        TextView inputLastName = (TextView) findViewById(R.id.input_last_name);
+        TextView inputPhone = (TextView) findViewById(R.id.input_phone);
+        TextView inputEmail = (TextView) findViewById(R.id.input_email);
+        TextView inputMessage = (TextView) findViewById(R.id.input_message);
 
-        Button createButton = (Button) findViewById(R.id.button_create_profile);
-        createButton.setOnClickListener( new View.OnClickListener() {
+        inputTitle.setText(title);
+        inputFirstName.setText(firstName);
+        inputLastName.setText(lastName);
+        inputPhone.setText(phone);
+        inputEmail.setText(email);
+        inputMessage.setText(message);
+
+        Button editButton = (Button) findViewById(R.id.button_edit_profile);
+        editButton.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-               createProfile();
+                editProfile();
             }
         });
 
     }
 
-    private void createProfile() {
-        Log.d(TAG, "Add");
+    private void editProfile() {
+        Log.d(TAG, "Edit");
 
         if (!validate()) {
-            onCreateFailed();
+            onEditFailed();
             return;
         }
 
@@ -79,23 +106,30 @@ public class AddProfileActivity extends BaseActivity {
         TextView inputEmail = (TextView) findViewById(R.id.input_email);
         TextView inputMessage = (TextView) findViewById(R.id.input_message);
 
-        Profile profile = new Profile();
-        profile.setTitle(inputTitle.getText().toString());
-        profile.setFirstName(inputFirstName.getText().toString());
-        profile.setLastName(inputLastName.getText().toString());
-        profile.setPhone(inputPhone.getText().toString());
-        profile.setEmail(inputEmail.getText().toString());
-        profile.setMessage(inputMessage.getText().toString());
-        profile.setChecked(false);
+
+        Intent intent = getIntent();
+        Integer id = intent.getIntExtra("id", 1);
+
+        String title = inputTitle.getText().toString();
+        String firstName = inputFirstName.getText().toString();
+        String lastName = inputLastName.getText().toString();
+        String phone = inputPhone.getText().toString();
+        String email = inputEmail.getText().toString();
+        String message = inputMessage.getText().toString();
+
         profileDao = new ProfileDao(this);
-        profileDao.create(profile);
-        onCreateSucceed();
+        try {
+            profileDao.updateProfileWithoutChecked(id, title, firstName, lastName, phone, email, message);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        onEditSucceed();
 
     }
 
-    public void onCreateSucceed() {
-        Button createButton = (Button) findViewById(R.id.button_create_profile);
-        createButton.setEnabled(true);
+    public void onEditSucceed() {
+        Button buttonEdit = (Button) findViewById(R.id.button_edit_profile);
+        buttonEdit.setEnabled(true);
 
         //finish activity profile
         Intent intent2 = new Intent("finish_activity");
@@ -103,15 +137,15 @@ public class AddProfileActivity extends BaseActivity {
 
         Intent intent = new Intent(this, ProfilesActivity.class);
         startActivity(intent);
-        Toast.makeText(getBaseContext(), "Create profile succeed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Edit profile succeed", Toast.LENGTH_LONG).show();
         finish();
 
     }
 
-    private void onCreateFailed() {
-        Toast.makeText(getBaseContext(), "Create profile failed", Toast.LENGTH_LONG).show();
-        Button createButton = (Button) findViewById(R.id.button_create_profile);
-        createButton.setEnabled(true);
+    private void onEditFailed() {
+        Toast.makeText(getBaseContext(), "Edit profile failed", Toast.LENGTH_LONG).show();
+        Button buttonEdit = (Button) findViewById(R.id.button_edit_profile);
+        buttonEdit.setEnabled(true);
     }
 
     private boolean validate() {
@@ -182,6 +216,4 @@ public class AddProfileActivity extends BaseActivity {
 
         return valid;
     }
-
-
 }

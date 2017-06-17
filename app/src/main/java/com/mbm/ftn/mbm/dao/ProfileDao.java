@@ -74,6 +74,36 @@ public class ProfileDao implements Crud {
             }
         }
 
+        public void updateProfileWithoutChecked(int id, String title, String firstName, String lastName, String phone, String email, String message) throws SQLException {
+            try {
+                UpdateBuilder<Profile, Integer> updateBuilder = helper.getProfileDao().updateBuilder();
+                updateBuilder.where().eq(Profile.ID_NAME_FIELD_NAME, id);
+
+                updateBuilder.updateColumnValue(Profile.TITLE_FIELD_NAME, title);
+                updateBuilder.updateColumnValue(Profile.FIRSTNAME_FIELD_NAME, firstName);
+                updateBuilder.updateColumnValue(Profile.LASTNAME_FIELD_NAME, lastName);
+                updateBuilder.updateColumnValue(Profile.PHONE_FIELD_NAME, phone);
+                updateBuilder.updateColumnValue(Profile.EMAIL_FIELD_NAME, email);
+                updateBuilder.updateColumnValue(Profile.MESSAGE_FIELD_NAME, message);
+                updateBuilder.update();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public Profile findByIdProfile(int id) throws SQLException{
+            Profile profile = new Profile();
+            try {
+                profile = helper.getProfileDao().queryForId(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return profile;
+
+        }
+
+
         @Override
         public int create(Object item) {
 
