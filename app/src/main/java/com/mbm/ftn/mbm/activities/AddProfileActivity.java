@@ -1,0 +1,179 @@
+package com.mbm.ftn.mbm.activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.adapters.ProfileAdapter;
+import com.mbm.ftn.mbm.dao.ProfileDao;
+import com.mbm.ftn.mbm.models.Profile;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Makso on 6/17/2017.
+ */
+
+public class AddProfileActivity extends BaseActivity {
+
+    private static final String TAG = "AddProfileActivity";
+
+    ProfileDao profileDao = null;
+
+    RecyclerView recyclerView;
+    ProfileAdapter profileAdapter;
+    private List<Profile> profileList = new ArrayList<>();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_profile);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setLogo(R.mipmap.ic_sos);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        profileDao = new ProfileDao(this);
+        profileList = profileDao.findAll();
+
+
+
+        Button createButton = (Button) findViewById(R.id.button_create_profile);
+        createButton.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+               createProfile();
+            }
+        });
+
+    }
+
+    private void createProfile() {
+        Log.d(TAG, "Register");
+
+        if (!validate()) {
+            onCreateFailed();
+            return;
+        }
+
+
+        TextView inputTitle = (TextView) findViewById(R.id.input_title);
+        TextView inputFirstName = (TextView) findViewById(R.id.input_first_name);
+        TextView inputLastName = (TextView) findViewById(R.id.input_last_name);
+        TextView inputPhone = (TextView) findViewById(R.id.input_phone);
+        TextView inputEmail = (TextView) findViewById(R.id.input_email);
+        TextView inputMessage = (TextView) findViewById(R.id.input_message);
+
+        Profile profile = new Profile();
+        profile.setTitle(inputTitle.getText().toString());
+        profile.setFirstName(inputFirstName.getText().toString());
+        profile.setLastName(inputLastName.getText().toString());
+        profile.setPhone(inputPhone.getText().toString());
+        profile.setEmail(inputEmail.getText().toString());
+        profile.setMessage(inputMessage.getText().toString());
+        profileDao = new ProfileDao(this);
+        profileDao.create(profile);
+        onCreateSucceed();
+
+    }
+
+    public void onCreateSucceed() {
+        Button createButton = (Button) findViewById(R.id.button_create_profile);
+        createButton.setEnabled(true);
+        Intent intent = new Intent(this, ProfilesActivity.class);
+        startActivity(intent);
+        Toast.makeText(getBaseContext(), "Create profile succeed", Toast.LENGTH_LONG).show();
+        finish();
+
+    }
+
+    private void onCreateFailed() {
+        Toast.makeText(getBaseContext(), "Create profile failed", Toast.LENGTH_LONG).show();
+        Button createButton = (Button) findViewById(R.id.button_create_profile);
+        createButton.setEnabled(true);
+    }
+
+    private boolean validate() {
+
+        TextView inputTitle = (TextView) findViewById(R.id.input_title);
+        TextView inputFirstName = (TextView) findViewById(R.id.input_first_name);
+        TextView inputLastName = (TextView) findViewById(R.id.input_last_name);
+        TextView inputPhone = (TextView) findViewById(R.id.input_phone);
+        TextView inputEmail = (TextView) findViewById(R.id.input_email);
+        TextView inputMessage = (TextView) findViewById(R.id.input_message);
+
+        boolean valid = true;
+        String title = inputTitle.getText().toString();
+        String firstName = inputFirstName.getText().toString();
+        String lastName = inputLastName.getText().toString();
+        String phone = inputPhone.getText().toString();
+        String email = inputEmail.getText().toString();
+        String message = inputMessage.getText().toString();
+
+        profileDao = new ProfileDao(this);
+        boolean titleExist = profileDao.checkIfTitleExist(title);
+        if (title.isEmpty() || title.length() > 30) {
+            inputTitle.setError("from 1 to at most 30 characters");
+            valid = false;
+        } else if (titleExist){
+            Log.d("USAO", "ad");
+            inputTitle.setError("Title already exists!");
+            valid = false;
+        } else {
+            Log.d("NIJE", "ad");
+            inputTitle.setError(null);
+        }
+
+        if (firstName.isEmpty() || firstName.length() >30) {
+            inputFirstName.setError("from 1 to at most 30 characters");
+            valid = false;
+        } else {
+            inputFirstName.setError(null);
+        }
+
+        if (lastName.isEmpty() || lastName.length() >30) {
+            inputLastName.setError("from 1 to at most 30 characters");
+            valid = false;
+        } else {
+            inputLastName.setError(null);
+        }
+
+        if (phone.isEmpty() || phone.length() >30) {
+            inputPhone.setError("from 1 to at most 30 characters");
+            valid = false;
+        } else {
+            inputPhone.setError(null);
+        }
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            inputEmail.setError("enter a valid email address");
+            valid = false;
+        } else {
+            inputEmail.setError(null);
+        }
+
+        if (message.isEmpty() || message.length() >200) {
+            inputMessage.setError("from 1 to at most 30 characters");
+            valid = false;
+        } else {
+            inputMessage.setError(null);
+        }
+
+        return valid;
+    }
+}

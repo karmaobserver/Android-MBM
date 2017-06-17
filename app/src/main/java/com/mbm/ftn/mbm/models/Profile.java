@@ -12,7 +12,9 @@ import java.io.Serializable;
 @DatabaseTable
 public class Profile extends BaseModel implements Serializable {
 
-    @DatabaseField
+    public static final String TITLE_FIELD_NAME = "title";
+
+    @DatabaseField(columnName = TITLE_FIELD_NAME)
     private String title;
 
     @DatabaseField

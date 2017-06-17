@@ -7,9 +7,11 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
+import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Profile;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +25,29 @@ public class ProfileDao implements Crud {
         public ProfileDao(Context context) {
             DatabaseManager.init(context);
             helper = DatabaseManager.getInstance().getHelper();
+        }
+
+        public boolean checkIfTitleExist(String title) {
+
+            boolean titleExist = false;
+            List<Profile> profileList = new ArrayList<>();
+            try {
+
+                QueryBuilder<Profile, Integer> profileQb = helper.getProfileDao().queryBuilder();
+
+                profileList = profileQb.where().eq(Profile.TITLE_FIELD_NAME, title).query();
+                Log.d("LISTA JE", "JE: "+profileList.size());
+                if (profileList.size() == 0) {
+                    titleExist = false;
+                } else {
+                    titleExist = true;
+                }
+            } catch (SQLException e) {
+                Log.d("REZULTAT", "JE: CATCH");
+                e.printStackTrace();
+            }
+
+            return titleExist;
         }
 
         @Override
