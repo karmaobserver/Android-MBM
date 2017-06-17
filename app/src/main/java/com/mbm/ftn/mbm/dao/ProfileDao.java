@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
@@ -48,6 +49,29 @@ public class ProfileDao implements Crud {
             }
 
             return titleExist;
+        }
+
+        public void deleteById(int id) {
+
+
+            try {
+                helper.getProfileDao().deleteById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        public void updateChecked(int id, boolean checked) throws SQLException {
+            try {
+                UpdateBuilder<Profile, Integer> updateBuilder = helper.getProfileDao().updateBuilder();
+                updateBuilder.where().eq(Profile.ID_NAME_FIELD_NAME, id);
+
+                updateBuilder.updateColumnValue(Profile.CHECKED_FIELD_NAME, checked);
+                updateBuilder.update();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -97,6 +121,8 @@ public class ProfileDao implements Crud {
             return index;
 
         }
+
+
 
         @Override
         public Object findById(int id) {

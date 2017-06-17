@@ -86,6 +86,7 @@ public class AddProfileActivity extends BaseActivity {
         profile.setPhone(inputPhone.getText().toString());
         profile.setEmail(inputEmail.getText().toString());
         profile.setMessage(inputMessage.getText().toString());
+        profile.setChecked(false);
         profileDao = new ProfileDao(this);
         profileDao.create(profile);
         onCreateSucceed();

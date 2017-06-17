@@ -10,7 +10,10 @@ import java.io.Serializable;
 
 public abstract class BaseModel implements Serializable {
 
-    @DatabaseField(generatedId=true)
+
+    public static final String ID_NAME_FIELD_NAME = "id";
+
+    @DatabaseField(generatedId=true, columnName = ID_NAME_FIELD_NAME)
     private Integer id;
 
     public BaseModel() {

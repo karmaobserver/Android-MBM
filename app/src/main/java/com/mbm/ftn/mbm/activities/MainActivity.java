@@ -165,9 +165,9 @@ public class MainActivity extends AppCompatActivity {
         survivalTextDao = new SurvivalTextDao(this);
         profileDao = new ProfileDao(this);
 
-        Profile profile1 = new Profile("BRAT", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Pomagaj brate!!!");
-        Profile profile2 = new Profile("Ćale", "Paja", "Pajtić", "+3821321", "paja@gmail.com", "Pomagaj ćale!!!");
-        Profile profile3 = new Profile("FBI", "Frobi", "Fbić", "+38199977777", "fbi@gmail.com", "Dje ste Ameri?!");
+        Profile profile1 = new Profile("BRAT", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Pomagaj brate!!!", false);
+        Profile profile2 = new Profile("Ćale", "Paja", "Pajtić", "+3821321", "paja@gmail.com", "Pomagaj ćale!!!", false);
+        Profile profile3 = new Profile("FBI", "Frobi", "Fbić", "+38199977777", "fbi@gmail.com", "Dje ste Ameri?!", false);
 
         profileDao.create(profile1);
         profileDao.create(profile2);

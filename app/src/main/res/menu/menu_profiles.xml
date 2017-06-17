@@ -12,13 +12,6 @@
         android:title="Add profile"/>
 
     <item
-        android:id="@+id/edit"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_mode_edit"
-        android:title="Edit profile"/>
-
-    <item
         android:id="@+id/action_settings"
         android:title="Settings">
     </item>

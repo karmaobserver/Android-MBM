@@ -3,21 +3,27 @@ package com.mbm.ftn.mbm.adapters;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.activities.ImportantNumbersActivity;
 import com.mbm.ftn.mbm.activities.NumbersActivity;
+import com.mbm.ftn.mbm.dao.NumberDao;
+import com.mbm.ftn.mbm.dao.ProfileDao;
 import com.mbm.ftn.mbm.dialogs.NumberPickedDialog;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.Profile;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +35,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     private static ViewHolder.ClickListener clickListener;
     private List<Profile> profileList;
+
+    ProfileDao profileDao = null;
 
     public ProfileAdapter(List<Profile> profileList) {
         this.profileList = profileList;
@@ -43,6 +51,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         private TextView phone;
         private TextView email;
         private TextView message;
+        private CheckBox checked;
+        private ImageButton delete;
+        private ImageButton edit;
 
         public ViewHolder(View view, ClickListener listener) {
             super(view);
@@ -53,14 +64,19 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             phone = (TextView) view.findViewById(R.id.phone);
             email = (TextView) view.findViewById(R.id.email);
             message = (TextView) view.findViewById(R.id.message);
+            checked = (CheckBox) view.findViewById(R.id.checked);
+            delete = (ImageButton) view.findViewById(R.id.delete);
+            edit = (ImageButton) view.findViewById(R.id.edit);
             view.setOnClickListener(this);
-            //number.setOnClickListener(this);
+            delete.setOnClickListener(this);
+            edit.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
-            if (v instanceof TextView) {
-                //clickListener.onTextItemClick(getAdapterPosition(), (TextView) v);
+            if (v instanceof ImageButton) {
+                clickListener.onImageButtonItemClick(getAdapterPosition(), (ImageButton) v);
             } else {
                 clickListener.onItemClick(getAdapterPosition(), v);
             }
@@ -69,7 +85,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public interface ClickListener {
             void onItemClick(int position, View v);
 
-            //void onTextItemClick(int position, TextView v);
+            void onImageButtonItemClick(int position, ImageButton v);
         }
     }
     /////////////////////////////////////End of inner class///////////////////////////////////////////
@@ -91,6 +107,26 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 TextView phone = (TextView) v.findViewById(R.id.phone);
                 TextView email = (TextView) v.findViewById(R.id.email);
                 TextView message = (TextView) v.findViewById(R.id.message);
+                CheckBox checked = (CheckBox) v.findViewById(R.id.checked);
+
+                if (checked.isSelected() || checked.isChecked()) {
+                    checked.setSelected(false);
+                    checked.setChecked(false);
+                } else {
+                    checked.setSelected(true);
+                    checked.setChecked(true);
+                }
+
+
+                profileDao = new ProfileDao(parent.getContext());
+
+                try {
+                    profileDao.updateChecked((int)getItemId(position), checked.isChecked());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
 
                 //Pozivanje Dialoga i prosledjivanje parametara
               /*  Bundle bundle = new Bundle();
@@ -114,10 +150,23 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             }
 
-            /*@Override
-            public void onTextItemClick(int position, TextView v) {
-                Toast.makeText(v.getContext(),  "Text is selected!", Toast.LENGTH_SHORT).show();
-            }*/
+            @Override
+            public void onImageButtonItemClick(int position, ImageButton v) {
+
+                if (v.getId() == R.id.delete) {
+
+                    profileDao = new ProfileDao(parent.getContext());
+                    profileDao.deleteById((int) getItemId(position));
+                    profileList.remove(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(v.getContext(), "Delete was successful", Toast.LENGTH_SHORT).show();
+
+                } else if (v.getId() == R.id.edit){
+                    Toast.makeText(v.getContext(), "Edit is selected!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
         });
 
         return viewHolder;
@@ -133,6 +182,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.phone.setText(profile.getPhone());
         holder.email.setText(profile.getEmail());
         holder.message.setText(profile.getMessage());
+        holder.checked.setChecked(profile.getChecked());
+       //holder.checked.isSelected(profile.getChecked());
 
        /* if (number.getDescription() == null || number.getDescription().toString().isEmpty()) {
             holder.description.setVisibility(View.GONE);
@@ -146,6 +197,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         return profileList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return profileList.get(position).getId();
+    }
+
+    public Profile getItem(int position) {
+        return profileList.get(position);
+    }
 
     public void setOnItemClickListener(ViewHolder.ClickListener clickListener) {
         ProfileAdapter.clickListener = clickListener;

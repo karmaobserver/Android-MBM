@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class Profile extends BaseModel implements Serializable {
 
     public static final String TITLE_FIELD_NAME = "title";
+    public static final String CHECKED_FIELD_NAME = "chechked";
 
     @DatabaseField(columnName = TITLE_FIELD_NAME)
     private String title;
@@ -32,16 +33,20 @@ public class Profile extends BaseModel implements Serializable {
     @DatabaseField
     private String message;
 
+    @DatabaseField(columnName = CHECKED_FIELD_NAME)
+    private Boolean checked;
+
     public Profile() {
     }
 
-    public Profile(String title, String firstName, String lastName, String phone, String email, String message) {
+    public Profile(String title, String firstName, String lastName, String phone, String email, String message, Boolean checked) {
         this.title = title;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
         this.message = message;
+        this.checked = checked;
     }
 
     public String getTitle() {
@@ -92,6 +97,14 @@ public class Profile extends BaseModel implements Serializable {
         this.message = message;
     }
 
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
+
     @Override
     public String toString() {
         return "Profile{" +
@@ -101,6 +114,7 @@ public class Profile extends BaseModel implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", message='" + message + '\'' +
+                ", checked=" + checked +
                 '}';
     }
 }
