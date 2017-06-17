@@ -127,7 +127,7 @@ public class NumberPickedDialog extends DialogFragment {
                 if (permissionGranted) {
                     startActivity(callIntent);
                 } else {
-                    ActivityCompat.requestPermissions((NumbersActivity)getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+                    ActivityCompat.requestPermissions((NumbersActivity)getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 200);
 
                 }
 

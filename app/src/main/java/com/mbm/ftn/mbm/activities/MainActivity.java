@@ -20,11 +20,13 @@ import com.mbm.ftn.mbm.activities.WeatherActivity;
 import com.mbm.ftn.mbm.dao.CityDao;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
+import com.mbm.ftn.mbm.dao.ProfileDao;
 import com.mbm.ftn.mbm.dao.SurvivalTextDao;
 import com.mbm.ftn.mbm.database.DatabaseManager;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
+import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.models.SurvivalText;
 
 import java.util.List;
@@ -35,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
     NumberDao numberDao = null;
     NumberListDao numberListDao = null;
     CityDao cityDao = null;
-    Number number = null;
-    NumberList numberList = null;
+    ProfileDao profileDao = null;
     SurvivalTextDao survivalTextDao = null;
     SurvivalText survivalText = null;
 
@@ -99,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton sos = (ImageButton) findViewById(R.id.button_middleleft);
+        sos.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SosActivity.class);
+                startActivity(intent);
+            }
+        });
+
         ImageButton weather = (ImageButton) findViewById(R.id.button_bottomright);
         weather.setOnClickListener(new View.OnClickListener() {
 
@@ -144,6 +155,15 @@ public class MainActivity extends AppCompatActivity {
         numberDao = new NumberDao(this);
         numberListDao = new NumberListDao(this);
         cityDao = new CityDao(this);
+        profileDao = new ProfileDao(this);
+
+        Profile profile1 = new Profile("BRAT", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Pomagaj brate!!!");
+        Profile profile2 = new Profile("Ćale", "Paja", "Pajtić", "+3821321", "paja@gmail.com", "Pomagaj ćale!!!");
+        Profile profile3 = new Profile("FBI", "Frobi", "Fbić", "+38199977777", "fbi@gmail.com", "Dje ste Ameri?!");
+
+        profileDao.create(profile1);
+        profileDao.create(profile2);
+        profileDao.create(profile3);
 
         City city1 = new City("Beograd");
         City city2 = new City("Novi Sad");
@@ -165,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
 
         NumberList mobileOperatorsList = new NumberList("Mobilna telefonija");
         numberListDao.create(mobileOperatorsList);
-        Number number5 = new Number("Vip mobile", "+381601234", null, mobileOperatorsList, "ww.vipmobile.rs", "Omladinskih brigada 21, Beograd", city3);
-        Number number6 = new Number("Telenor", "+3816390000", null, mobileOperatorsList, "www.telenor.rs", "Omladinskih brigada 90, Beograd", city3);
+        Number number5 = new Number("Vip mobile", "+381601234", null, mobileOperatorsList, "https://www.vipmobile.rs/privatni", "Omladinskih brigada 21, Beograd", city3);
+        Number number6 = new Number("Telenor", "+3816390000", null, mobileOperatorsList, "https://www.telenor.rs/", "Omladinskih brigada 90, Beograd", city3);
         Number number7 = new Number("MTS", "+38164789", null, mobileOperatorsList, "https://www.mts.rs/", "Branislava Nusića", city3);
 
 
@@ -181,19 +201,19 @@ public class MainActivity extends AppCompatActivity {
         Number number14 = new Number("Higijenski Zavod", "+38121422255", "Bolnica za decu", healthCare, null, null, city2);
         Number number15 = new Number("Noćna ambulanta Zemun", "+381112600192", "Svakog dana 19:00-07:00", healthCare, null, "Karađorđev trg 4", city1);
         Number number16 = new Number("Dežurna apoteka  Prvi Maj", "+381112643170", "svakog dana 00:00-24:00", healthCare, null, "Kralja Milana 9", city1);
-        Number number17 = new Number("KBC Zvezdara", "+381113806969", null, healthCare, "www.kbczvezdara.com", "Dimitrija Tucovića 161", city1);
+        Number number17 = new Number("KBC Zvezdara", "+381113806969", null, healthCare, "http://www.kbczvezdara.rs/", "Dimitrija Tucovića 161", city1);
 
         NumberList transport = new NumberList("Saobraćaj");
         numberListDao.create(transport);
-        Number number18 = new Number("Automoto Savez Srbije", "987", "Pomoć na putu, stanje na putevima, međunarodna dokumenta, saobraćajna...", transport, "www.amss.org.rs", "Ruzveltova 18, Zvezdara", city3);
-        Number number19 = new Number("Aerodorom Nikola Tesla", "+381112094444", null, transport, "www.beg.aero", "Beograd", city3);
-        Number number20 = new Number("Aerodrom Konstantin Veliki", "+38118585858", null, transport, "www.nis-airport.com", "Vazduhoplovaca 24", city3);
+        Number number18 = new Number("Automoto Savez Srbije", "987", "Pomoć na putu, stanje na putevima, međunarodna dokumenta, saobraćajna...", transport, "http://www.amss.org.rs/", "Ruzveltova 18, Zvezdara", city3);
+        Number number19 = new Number("Aerodorom Nikola Tesla", "+381112094444", null, transport, "http://www.beg.aero/", "Beograd", city3);
+        Number number20 = new Number("Aerodrom Konstantin Veliki", "+38118585858", null, transport, "http://nis-airport.com/en/", "Vazduhoplovaca 24", city3);
         Number number21 = new Number("Autobuska stanica", "+38118255177", null, transport, null, null, city4);
         Number number22 = new Number("Železnička stanica", "+38118364625", null, transport, null, null, city4);
-        Number number23 = new Number("Autobuska stanica", "0901111021", "Međumesna autobuska stanica Novog Sada", transport, "www.gspns.co.rs", null, city2);
-        Number number24 = new Number("Železnička stanica", "+38121443200", "Želeynice Srbije, stanica Novi Sad", transport, "www.zeleznicesrbije.com", null, city2);
-        Number number25 = new Number("Autobuska stanica", "+381112636299", "Beogradska autobuska stanica", transport, "www.bas.rs", "Železnička 4", city1);
-        Number number26 = new Number("Železnička stanica", "+38118364625", "Železnice Srbije, stanica Beograd", transport, "www.zeleznicesrbije.com", "Savski trg 2", city1);
+        Number number23 = new Number("Autobuska stanica", "0901111021", "Međumesna autobuska stanica Novog Sada", transport, "http://www.gspns.co.rs/", null, city2);
+        Number number24 = new Number("Železnička stanica", "+38121443200", "Želeynice Srbije, stanica Novi Sad", transport, "http://www.zeleznicesrbije.com/", null, city2);
+        Number number25 = new Number("Autobuska stanica", "+381112636299", "Beogradska autobuska stanica", transport, "http://www.bas.rs/", "Železnička 4", city1);
+        Number number26 = new Number("Železnička stanica", "+38118364625", "Železnice Srbije, stanica Beograd", transport, "http://www.zeleznicesrbije.com/", "Savski trg 2", city1);
 
         numberDao.create(number1);
         numberDao.create(number2);
