@@ -67,5 +67,4 @@ public class SurvivalTextListFragment extends Fragment {
         textList.addAll(survivalTextDao.findAll());
         sAdapter.notifyDataSetChanged();
     }
-
 }

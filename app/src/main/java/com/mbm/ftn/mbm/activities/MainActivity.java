@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -493,32 +492,27 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference firebase = database.getReference("firebase");
 
         DatabaseReference textDb = firebase.child("texts");
-
-
-       textDb.addChildEventListener(new ChildEventListener() {
+        textDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 SurvivalText st = dataSnapshot.getValue(SurvivalText.class);
-                if (st != null){
+
+                if (survivalTextDao.findById(st.getId()) == null) {
                     survivalTextDao.create(st);
                 }
-
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 SurvivalText st = dataSnapshot.getValue(SurvivalText.class);
-                if (st != null){
-                    survivalTextDao.create(st);
-                }
+                survivalTextDao.update(st);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 SurvivalText st = dataSnapshot.getValue(SurvivalText.class);
-                if (st != null){
-                    survivalTextDao.create(st);
-                }
+                survivalTextDao.delete(st);
+
             }
 
             @Override
@@ -537,19 +531,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Number n = dataSnapshot.getValue(Number.class);
-                numberDao.create(n);
+                if (numberDao.findById(n.getId()) == null) {
+                    numberDao.create(n);
+                }
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Number n = dataSnapshot.getValue(Number.class);
-                numberDao.create(n);
+                numberDao.update(n);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Number n = dataSnapshot.getValue(Number.class);
-                numberDao.create(n);
+                numberDao.delete(n);
             }
 
             @Override
@@ -568,19 +565,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 NumberList nl = dataSnapshot.getValue(NumberList.class);
-                numberListDao.create(nl);
+
+                if (numberListDao.findById(nl.getId()) == null) {
+                    numberListDao.create(nl);
+                }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 NumberList nl = dataSnapshot.getValue(NumberList.class);
-                numberListDao.create(nl);
+                numberListDao.update(nl);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 NumberList nl = dataSnapshot.getValue(NumberList.class);
-                numberListDao.create(nl);
+                numberListDao.delete(nl);
             }
 
             @Override
@@ -599,19 +599,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 City c = dataSnapshot.getValue(City.class);
-                cityDao.create(c);
+                if (cityDao.findById(c.getId()) == null) {
+                    cityDao.create(c);
+                }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 City c = dataSnapshot.getValue(City.class);
-                cityDao.create(c);
+                cityDao.update(c);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 City c = dataSnapshot.getValue(City.class);
-                cityDao.create(c);
+                cityDao.delete(c);
             }
 
             @Override
@@ -631,19 +633,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Profile p = dataSnapshot.getValue(Profile.class);
-                profileDao.create(p);
+                if (profileDao.findById(p.getId()) == null) {
+                    profileDao.create(p);
+                }
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Profile p = dataSnapshot.getValue(Profile.class);
-                profileDao.create(p);
+                profileDao.update(p);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Profile p = dataSnapshot.getValue(Profile.class);
-                profileDao.create(p);
+                profileDao.delete(p);
             }
 
             @Override
