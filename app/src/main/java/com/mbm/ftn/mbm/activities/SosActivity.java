@@ -6,12 +6,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.utils.GPSTracker;
 
 
 /**
@@ -74,7 +76,19 @@ public class SosActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        GPSTracker gps = new GPSTracker(SosActivity.this);
+
+        if(gps.canGetLocation()) {
+            double lat = gps.getLatitude();
+            double lon = gps.getLongitude();
+            LatLng currentLocation = new LatLng(lat,lon);
+            map.addMarker(new MarkerOptions().position(currentLocation).title("Marker"));
+            map.moveCamera( CameraUpdateFactory.newLatLngZoom(currentLocation, 14.0f) );
+
+        }
+        else {
+            map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        }
     }
 
 
