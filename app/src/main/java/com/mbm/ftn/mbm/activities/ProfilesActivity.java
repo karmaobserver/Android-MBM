@@ -13,12 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mbm.ftn.mbm.R;
-import com.mbm.ftn.mbm.adapters.NumberAdapter;
 import com.mbm.ftn.mbm.adapters.ProfileAdapter;
-import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.ProfileDao;
-import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.Profile;
 
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ public class ProfilesActivity extends BaseActivity  {
     RecyclerView recyclerView;
     ProfileAdapter profileAdapter;
     private List<Profile> profileList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

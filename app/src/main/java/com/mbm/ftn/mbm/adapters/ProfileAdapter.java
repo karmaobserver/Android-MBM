@@ -1,32 +1,21 @@
 package com.mbm.ftn.mbm.adapters;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.activities.EditProfileActivity;
-import com.mbm.ftn.mbm.activities.ImportantNumbersActivity;
-import com.mbm.ftn.mbm.activities.NumbersActivity;
-import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.ProfileDao;
-import com.mbm.ftn.mbm.dialogs.NumberPickedDialog;
-import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.Profile;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -120,8 +109,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                 //update to database
                 profileDao = new ProfileDao(parent.getContext());
+
                 try {
-                    profileDao.updateChecked((int)getItemId(position), checked.isChecked());
+                    Profile p = profileDao.findByIdProfile((int)getItemId(position));
+                    profileDao.updateChecked((int)getItemId(position), checked.isChecked(), p);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -134,8 +125,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 if (v.getId() == R.id.delete) {
 
                     profileDao = new ProfileDao(parent.getContext());
-                    profileDao.deleteById((int) getItemId(position));
-                    profileList.remove(position);
+                    Profile p = null;
+                    try {
+                        p = profileDao.findByIdProfile((int) getItemId(position));
+                        profileDao.deleteById((int) getItemId(position), p);
+                        profileList.remove(position);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                     notifyDataSetChanged();
                     Toast.makeText(v.getContext(), "Delete was successful", Toast.LENGTH_SHORT).show();
 

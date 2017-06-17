@@ -462,6 +462,11 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference firebase = database.getReference("firebase");
+        firebase.child("text").removeValue();
+        firebase.child("numbers").removeValue();
+        firebase.child("numberLists").removeValue();
+        firebase.child("cities").removeValue();
+        firebase.child("profiles").removeValue();
 
         DatabaseReference textDb = firebase.child("texts");
         textDb.setValue(textList);

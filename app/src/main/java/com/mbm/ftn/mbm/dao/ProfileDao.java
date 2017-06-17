@@ -3,12 +3,13 @@ package com.mbm.ftn.mbm.dao;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.mbm.ftn.mbm.database.Crud;
 import com.mbm.ftn.mbm.database.DatabaseHelper;
 import com.mbm.ftn.mbm.database.DatabaseManager;
-import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Profile;
 
 import java.sql.SQLException;
@@ -22,6 +23,8 @@ import java.util.List;
 public class ProfileDao implements Crud {
 
         private DatabaseHelper helper;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference firebase = database.getReference("firebase");
 
         public ProfileDao(Context context) {
             DatabaseManager.init(context);
@@ -51,10 +54,13 @@ public class ProfileDao implements Crud {
             return titleExist;
         }
 
-        public void deleteById(int id) {
+        public void deleteById(int id, Profile p) {
 
 
             try {
+                DatabaseReference profilsDb = firebase.child("profiles");
+                DatabaseReference profileDb = profilsDb.child(String.valueOf(id));
+                profileDb.removeValue();
                 helper.getProfileDao().deleteById(id);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -62,19 +68,25 @@ public class ProfileDao implements Crud {
 
         }
 
-        public void updateChecked(int id, boolean checked) throws SQLException {
+        public void updateChecked(int id, boolean checked, Profile p) throws SQLException {
             try {
                 UpdateBuilder<Profile, Integer> updateBuilder = helper.getProfileDao().updateBuilder();
                 updateBuilder.where().eq(Profile.ID_NAME_FIELD_NAME, id);
-
                 updateBuilder.updateColumnValue(Profile.CHECKED_FIELD_NAME, checked);
+
+                p.setChecked(checked);
+
+                DatabaseReference profilsDb = firebase.child("profiles");
+                DatabaseReference profileDb = profilsDb.child(String.valueOf(id));
+                profileDb.setValue(p);
+
                 updateBuilder.update();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
-        public void updateProfileWithoutChecked(int id, String title, String firstName, String lastName, String phone, String email, String message) throws SQLException {
+        public void updateProfileWithoutChecked(int id, String title, String firstName, String lastName, String phone, String email, String message, Profile p) throws SQLException {
             try {
                 UpdateBuilder<Profile, Integer> updateBuilder = helper.getProfileDao().updateBuilder();
                 updateBuilder.where().eq(Profile.ID_NAME_FIELD_NAME, id);
@@ -86,6 +98,18 @@ public class ProfileDao implements Crud {
                 updateBuilder.updateColumnValue(Profile.EMAIL_FIELD_NAME, email);
                 updateBuilder.updateColumnValue(Profile.MESSAGE_FIELD_NAME, message);
                 updateBuilder.update();
+
+                p.setTitle(title);
+                p.setEmail(email);
+                p.setFirstName(firstName);
+                p.setLastName(lastName);
+                p.setMessage(message);
+                p.setPhone(phone);
+
+                DatabaseReference profilsDb = firebase.child("profiles");
+                DatabaseReference profileDb = profilsDb.child(String.valueOf(id));
+                profileDb.setValue(p);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

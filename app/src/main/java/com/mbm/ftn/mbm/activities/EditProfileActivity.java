@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.adapters.ProfileAdapter;
-import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.ProfileDao;
 import com.mbm.ftn.mbm.models.Profile;
 
@@ -118,8 +117,10 @@ public class EditProfileActivity extends BaseActivity {
         String message = inputMessage.getText().toString();
 
         profileDao = new ProfileDao(this);
+
         try {
-            profileDao.updateProfileWithoutChecked(id, title, firstName, lastName, phone, email, message);
+            Profile p = profileDao.findByIdProfile(id);
+            profileDao.updateProfileWithoutChecked(id, title, firstName, lastName, phone, email, message, p);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -2,9 +2,6 @@ package com.mbm.ftn.mbm.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.adapters.ProfileAdapter;
 import com.mbm.ftn.mbm.dao.ProfileDao;
@@ -34,6 +33,8 @@ public class AddProfileActivity extends BaseActivity {
     RecyclerView recyclerView;
     ProfileAdapter profileAdapter;
     private List<Profile> profileList = new ArrayList<>();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference firebase = database.getReference("firebase");
 
 
     @Override
@@ -89,6 +90,10 @@ public class AddProfileActivity extends BaseActivity {
         profile.setChecked(false);
         profileDao = new ProfileDao(this);
         profileDao.create(profile);
+
+        DatabaseReference profilesDb = firebase.child("profiles");
+        profilesDb.push().setValue(profile);
+
         onCreateSucceed();
 
     }
