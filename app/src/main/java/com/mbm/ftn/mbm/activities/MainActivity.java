@@ -11,6 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.dao.CityDao;
 import com.mbm.ftn.mbm.dao.NumberDao;
@@ -24,6 +29,9 @@ import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.models.SurvivalText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,25 +40,30 @@ public class MainActivity extends AppCompatActivity {
     CityDao cityDao = null;
     ProfileDao profileDao = null;
     SurvivalTextDao survivalTextDao = null;
-    SurvivalText survivalText = null;
+    List<SurvivalText> textList = new ArrayList<SurvivalText>();
+    List<Number> numberList = new ArrayList<Number>();
+    List<NumberList> numberListList = new ArrayList<NumberList>();
+    List<City> cityList = new ArrayList<City>();
+    List<Profile> profileList = new ArrayList<Profile>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        //  getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Database init
         DatabaseManager.init(this);
         //databaseInit();
+        //addToFirebase();
+        firebaseSync();
 
         // Display icon in the toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
 
 
         ImageButton flashlightButton2 = (ImageButton) findViewById(R.id.button_topleft);
@@ -116,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -159,6 +173,10 @@ public class MainActivity extends AppCompatActivity {
         profileDao.create(profile2);
         profileDao.create(profile3);
 
+        profileList.add(profile1);
+        profileList.add(profile2);
+        profileList.add(profile3);
+
 
         City city1 = new City("Beograd");
         City city2 = new City("Novi Sad");
@@ -169,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
         cityDao.create(city2);
         cityDao.create(city3);
         cityDao.create(city4);
+
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+        cityList.add(city4);
 
         NumberList emergencyList = new NumberList("Hitne službe");
         numberListDao.create(emergencyList);
@@ -210,6 +233,10 @@ public class MainActivity extends AppCompatActivity {
         Number number25 = new Number("Autobuska stanica", "+381112636299", "Beogradska autobuska stanica", transport, "http://www.bas.rs/", "Železnička 4", city1);
         Number number26 = new Number("Železnička stanica", "+38118364625", "Železnice Srbije, stanica Beograd", transport, "http://www.zeleznicesrbije.com/", "Savski trg 2", city1);
 
+        numberListList.add(mobileOperatorsList);
+        numberListList.add(healthCare);
+        numberListList.add(transport);
+
         numberDao.create(number1);
         numberDao.create(number2);
         numberDao.create(number3);
@@ -237,10 +264,35 @@ public class MainActivity extends AppCompatActivity {
         numberDao.create(number25);
         numberDao.create(number26);
 
+        numberList.add(number1);
+        numberList.add(number2);
+        numberList.add(number3);
+        numberList.add(number4);
+        numberList.add(number5);
+        numberList.add(number6);
+        numberList.add(number7);
+        numberList.add(number8);
+        numberList.add(number9);
+        numberList.add(number10);
+        numberList.add(number11);
+        numberList.add(number12);
+        numberList.add(number13);
+        numberList.add(number14);
+        numberList.add(number15);
+        numberList.add(number16);
+        numberList.add(number17);
+        numberList.add(number18);
+        numberList.add(number19);
+        numberList.add(number20);
+        numberList.add(number21);
+        numberList.add(number22);
+        numberList.add(number23);
+        numberList.add(number24);
+        numberList.add(number25);
+        numberList.add(number26);
+
+
         /*Survival Text Database*/
-        //TODO 1. dodati validne podatke i slike
-
-
         SurvivalText s1 = new SurvivalText("Pribor za preživljavanje", "Nekoliko ključnih stvari može činiti bit borbe za preživljavanje.\n" +
                 "Za to je potrebno prikupiti stvari prikazane na slici 1. Sve one\n" +
                 "mogu se smjestiti u malu torbicu (kutiju i sl.) ili kutiju za\n" +
@@ -393,7 +445,218 @@ public class MainActivity extends AppCompatActivity {
         survivalTextDao.create(s7);
         survivalTextDao.create(s8);
 
+        textList.add(s1);
+        textList.add(s2);
+        textList.add(s3);
+        textList.add(s4);
+        textList.add(s5);
+        textList.add(s6);
+        textList.add(s7);
+        textList.add(s8);
+
         Log.d("DATABASE_INIT", "Database has initilize");
+
+
+    }
+
+    private void addToFirebase() {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference firebase = database.getReference("firebase");
+
+        DatabaseReference textDb = firebase.child("texts");
+        textDb.setValue(textList);
+
+        DatabaseReference numberDb = firebase.child("numbers");
+        numberDb.setValue(numberList);
+
+        DatabaseReference numberListDb = firebase.child("numberLists");
+        numberListDb.setValue(numberListList);
+
+        DatabaseReference cityListDb = firebase.child("cities");
+        cityListDb.setValue(cityList);
+
+        DatabaseReference profileListDb = firebase.child("profiles");
+        profileListDb.setValue(profileList);
+    }
+
+
+    private void firebaseSync() {
+
+        numberDao = new NumberDao(this);
+        numberListDao = new NumberListDao(this);
+        cityDao = new CityDao(this);
+        survivalTextDao = new SurvivalTextDao(this);
+        profileDao = new ProfileDao(this);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference firebase = database.getReference("firebase");
+
+        DatabaseReference textDb = firebase.child("texts");
+
+
+       textDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                SurvivalText st = dataSnapshot.getValue(SurvivalText.class);
+                if (st != null){
+                    survivalTextDao.create(st);
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                SurvivalText st = dataSnapshot.getValue(SurvivalText.class);
+                if (st != null){
+                    survivalTextDao.create(st);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                SurvivalText st = dataSnapshot.getValue(SurvivalText.class);
+                if (st != null){
+                    survivalTextDao.create(st);
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference numberDb = firebase.child("numbers");
+        numberDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Number n = dataSnapshot.getValue(Number.class);
+                numberDao.create(n);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Number n = dataSnapshot.getValue(Number.class);
+                numberDao.create(n);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Number n = dataSnapshot.getValue(Number.class);
+                numberDao.create(n);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference numberListDb = firebase.child("numberLists");
+        numberListDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                NumberList nl = dataSnapshot.getValue(NumberList.class);
+                numberListDao.create(nl);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                NumberList nl = dataSnapshot.getValue(NumberList.class);
+                numberListDao.create(nl);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                NumberList nl = dataSnapshot.getValue(NumberList.class);
+                numberListDao.create(nl);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference cityListDb = firebase.child("cities");
+        cityListDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                City c = dataSnapshot.getValue(City.class);
+                cityDao.create(c);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                City c = dataSnapshot.getValue(City.class);
+                cityDao.create(c);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                City c = dataSnapshot.getValue(City.class);
+                cityDao.create(c);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        DatabaseReference profileListDb = firebase.child("profiles");
+        profileListDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Profile p = dataSnapshot.getValue(Profile.class);
+                profileDao.create(p);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Profile p = dataSnapshot.getValue(Profile.class);
+                profileDao.create(p);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Profile p = dataSnapshot.getValue(Profile.class);
+                profileDao.create(p);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
