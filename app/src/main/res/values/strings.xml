@@ -76,4 +76,9 @@
 
     <!-- Activity names -->
     <string name="title_activity_search">Pretraži grad</string>
+
+    <!--    Dozvole    -->
+    <string name="permission_rationale_location">Pristup lokaciji je neophodan kako bi mogli da vidite gde se trenutno nalazite.</string>
+    <string name="location_permission_denied">Pristup lokaciji je neophodan kako bi mogli da vidite gde se trenutno nalazite.</string>
+    <string name="permission_required_toast">Pristup lokaciji je neophodan kako bi mogli da vidite gde se trenutno nalazite.</string>
 </resources>

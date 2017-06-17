@@ -1,28 +1,58 @@
 package com.mbm.ftn.mbm.activities;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.mbm.ftn.mbm.R;
-import com.mbm.ftn.mbm.utils.GPSTracker;
+import com.mbm.ftn.mbm.utils.PermissionUtils;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by Makso on 6/17/2017.
  */
 
-public class SosActivity extends BaseActivity implements OnMapReadyCallback {
+public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationButtonClickListener,
+        OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        LocationListener
 
+{
+
+    private static final LatLng DARWIN = new LatLng(-12.4258647, 130.7932231);
+    private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
+    private static final int INITIAL_STROKE_WIDTH_PX = 5;
     private GoogleMap mMap;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean mPermissionDenied = false;
+    private LocationManager locationManager;
+    private ArrayList<LatLng> points; //added
+    Polyline line;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +70,29 @@ public class SosActivity extends BaseActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
 
+        points = new ArrayList<LatLng>();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if(permissionGranted) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    2000,5, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    2000, 10, this);
+        }
+        else{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        }
+
+
+
+
+
     }
+
+
+
 
 
     @Override
@@ -60,6 +112,10 @@ public class SosActivity extends BaseActivity implements OnMapReadyCallback {
                 startActivity(intent);
                 return true;
 
+            case R.id.action_gps:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
@@ -70,7 +126,7 @@ public class SosActivity extends BaseActivity implements OnMapReadyCallback {
 
     }
 
-    @Override
+    /*@Override
     public void onMapReady(GoogleMap map) {
         GPSTracker gps = new GPSTracker(SosActivity.this);
 
@@ -85,6 +141,143 @@ public class SosActivity extends BaseActivity implements OnMapReadyCallback {
         else {
             map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         }
+    }*/
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        mMap = map;
+
+        mMap.setOnMyLocationButtonClickListener(this);
+
+
+
+        enableMyLocation();
+        UiSettings uiSettings = map.getUiSettings();
+        uiSettings.setZoomControlsEnabled(true);
+        uiSettings.setCompassEnabled(true);
+        uiSettings.setMapToolbarEnabled(true);
+
+        /*map.addPolyline(new PolylineOptions()
+                .add(DARWIN, MELBOURNE)
+                .width(INITIAL_STROKE_WIDTH_PX)
+                .color(Color.BLUE)
+                .geodesic(true));*/
+
+
+
+
+
+    }
+
+
+
+    /**
+     * Enables the My Location layer if the fine location permission has been granted.
+     */
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            // Access to the location has been granted to the app.
+            mMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        //Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
+    }
+
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            enableMyLocation();
+        } else {
+            // Display the missing permission error dialog when the fragments resume.
+            mPermissionDenied = true;
+        }
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (mPermissionDenied) {
+            // Permission was not granted, display error dialog.
+            showMissingPermissionError();
+            mPermissionDenied = false;
+        }
+    }
+
+    /**
+     * Displays a dialog with error message explaining that the location permission is missing.
+     */
+    private void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog
+                .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        /*String msg = "New Latitude: " + location.getLatitude()
+                + "New Longitude: " + location.getLongitude();
+
+        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();*/
+
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        LatLng latLng = new LatLng(latitude, longitude); //you already have this
+
+        points.add(latLng); //added
+        redrawLine();
+
+    }
+
+    private void redrawLine() {
+        mMap.clear();  //clears all Markers and Polylines
+
+        PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
+        for (int i = 0; i < points.size(); i++) {
+            LatLng point = points.get(i);
+            options.add(point);
+        }
+        //add Marker in current position
+        line = mMap.addPolyline(options); //add Polyline
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(getBaseContext(), "GPS je upaljen ",
+                Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
 
