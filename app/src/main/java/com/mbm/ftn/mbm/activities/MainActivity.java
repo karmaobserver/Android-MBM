@@ -12,11 +12,6 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.mbm.ftn.mbm.R;
-import com.mbm.ftn.mbm.activities.CompassActivity;
-import com.mbm.ftn.mbm.activities.Flashlight2Activity;
-import com.mbm.ftn.mbm.activities.ImportantNumbersActivity;
-import com.mbm.ftn.mbm.activities.SurvivalTextActivity;
-import com.mbm.ftn.mbm.activities.WeatherActivity;
 import com.mbm.ftn.mbm.dao.CityDao;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
@@ -28,8 +23,6 @@ import com.mbm.ftn.mbm.models.Number;
 import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.models.SurvivalText;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -155,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         numberDao = new NumberDao(this);
         numberListDao = new NumberListDao(this);
         cityDao = new CityDao(this);
+        survivalTextDao = new SurvivalTextDao(this);
         profileDao = new ProfileDao(this);
 
         Profile profile1 = new Profile("BRAT", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Pomagaj brate!!!");
@@ -164,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         profileDao.create(profile1);
         profileDao.create(profile2);
         profileDao.create(profile3);
+
 
         City city1 = new City("Beograd");
         City city2 = new City("Novi Sad");
@@ -244,17 +239,159 @@ public class MainActivity extends AppCompatActivity {
 
         /*Survival Text Database*/
         //TODO 1. dodati validne podatke i slike
-        survivalTextDao = new SurvivalTextDao(this);
 
-        SurvivalText s1 = new SurvivalText("Uvod", "Text Uvod", "Opis Uvod", R.drawable.compass);
-        SurvivalText s2 = new SurvivalText("Psihologija preživljavanja", "Text Psihologija preživljavanja", "Opis Psihologija preživljavanja", R.drawable.flashlight);
-        SurvivalText s3 = new SurvivalText("Planiranje i oprema", "Text Planiranje i oprema", "Opis Planiranje i oprema", R.drawable.button_shape_important_numbers);
-        SurvivalText s4 = new SurvivalText("Skrovište", "Text Skrovište", "Opis Skrovište", R.drawable.police);
+
+        SurvivalText s1 = new SurvivalText("Pribor za preživljavanje", "Nekoliko ključnih stvari može činiti bit borbe za preživljavanje.\n" +
+                "Za to je potrebno prikupiti stvari prikazane na slici 1. Sve one\n" +
+                "mogu se smjestiti u malu torbicu (kutiju i sl.) ili kutiju za\n" +
+                "cigarete (tabakeru), koja je teško uočljiva. Stvorite naviku da\n" +
+                "uvijek imate pribor uz sebe. Ne birajte ništa veliko jer može\n" +
+                "biti neprikladno za nošenje, a tada najpotrebnije stvari mogu\n" +
+                "ostati zaboravljene kod kuće. Mnogi ljudi koji sami savijaju\n" +
+                "cigarete imaju takve kutijice. No ova naša tabakera mnogo je\n" +
+                "korisnija, tako reći, može Vam spasiti život, dok pušači kreću\n" +
+                "prema kraju svojega. Iskustva su pokazala da svaki dio\n" +
+                "pribora zaslužuje svoje mjesto, iako je ponekad neki dio\n" +
+                "korisniji u nekim situacijama nego drugi: udice za ribe, na\n" +
+                "primjer, mogu biti nekorisne u džungli, ali su vrlo korisne u\n" +
+                "pustinji.", "Nekoliko ključnih stvari može činiti bit borbe za preživljavanje.", R.drawable.ic_pribor);
+
+        SurvivalText s2 = new SurvivalText("Noževi", "Nož je nezamjenjiv i neophodan u slučajevima preživljavanja. Ozbiljni avanturisti sigurno će imati\n" +
+                "barem jedan uz sebe. Noževi su svakako opasni i mogu poslužiti kao oružje. Prilikom putovanja, a\n" +
+                "posebice avionom, treba biti dobro zapakiran i neprimjetan (zajedno sa pilotskom i avionskom opremom)\n" +
+                "te ga nije uputno vaditi u napetim i nezgodnim situacijama.\n" +
+                "Izbor noža\n" +
+                "Sklapajući nož sa više oštrica je koristan pribor, ali ako se namjerava nositi samo jedan nož,\n" +
+                "najbolji je višenamjenski nož, koji će zadovoljiti sve potrebe efikasno i lako: od rezanja tanjih grana do\n" +
+                "guljenja životinja i pripreme namirnica. Neki noževi imaju u svojoj dršci i kompas ili im je kompletna drška\n" +
+                "šuplja tako da u nju stane i nešto od pribora za preživljavanje. U svakom slučaju te varijante zavisit će od\n" +
+                "izdržljivosti šuplje drške, a kompas bi mogao brzo izgubiti svoju preciznost, nakon što bi se nožem\n" +
+                "zasijecala tvrđa drveća. Ako se slučajno takav nož izgubi, izgubio se i pribor za preživljavanje.", "Nož je nezamjenjiv i neophodan u slučajevima preživljavanja.", R.drawable.ic_noz);
+
+        SurvivalText s3 = new SurvivalText("Suočavanje sa kriznim situacijama", "Pri suočavanju sa kriznim situacijama najlakše je prepustiti se, doživjeti slom i sažaljevati se.\n" +
+                "Nema nikakve koristi predavati se i \"zakapati glavu u pijesak\", nadati se da je to samo ružan san koji će\n" +
+                "uskoro proći. Neće proći, a sa takvim razmišljanjem situacija će se još i pogoršavati. Samo pozitivan stav i\n" +
+                "djelovanje su spas. Zdrava i dobro hranjena osoba može se fizički postaviti pred veliku dilemu, brinući se\n" +
+                "o samopovjerenju. Čak i bolesna, ranjena te neodlučna osoba, može sigurno proći kroz takvu situaciju i\n" +
+                "oporaviti se. Da bi tako bilo postoje određene stresne situacije koje treba prevladati.\n" +
+                "Stresovi preživljavanja\n" +
+                "Situacija preživljavanja stavit će Vas pod fizički i psihički pritisak. Morat ćete prebroditi neke ili sve\n" +
+                "od navedenih stresova:\n" +
+                "- strah i uznemirenost;\n" +
+                "- bol, bolest i ranjavanje;\n" +
+                "- hladnoća i / ili vrućina;\n" +
+                "- žeđ, glad i umor;\n" +
+                "- lišavanje sna (nesanica);\n" +
+                "- dosada;\n" +
+                "- samoća i izolacija.\n" +
+                "Da li ste dorasli svemu tome ? Morate biti.", "Pri suočavanju sa kriznim situacijama najlakše je prepustiti se, doživjeti slom i sažaljevati se.", R.drawable.ic_krizne);
+
+        SurvivalText s4 = new SurvivalText("Voda", "Voda je jedan od bitnih elemenata za život. Cijeli život praktički ovisi o vodi i svako živo biće je\n" +
+                "nosi u sebi. Prosječan čovjek može preživjeti tri tjedna bez hrane, ali samo tri dana bez vode.\n" +
+                "Voda je prioritet broj jedan. Nemojte čekati da Vam nestanu zalihe vode, a da je prije niste pokušali\n" +
+                "negdje pronaći. Pohranite ono što imate i počnite što je moguće prije tražiti izvore za stvaranje novih\n" +
+                "zaliha. Poželjna je svježa izvorska voda, iako sve vrste voda mogu biti sterilizirane kuhanjem ili uporabom\n" +
+                "kemijskih prečistača. Tijelo čovjeka sadrži 75 % vode. Ona je održavatelj organizma pri svim\n" +
+                "temperaturama, potrebna je pri održavanju bubrežne funkcije koja eliminira otpadne tvari te je u neku ruku\n" +
+                "i vodič za živčane impulse. Tekućine u organizmu su ograničene. Gubitak vode u organizmu mora biti\n" +
+                "nadomješten ili će stradati Vaše zdravlje i snaga.\n" +
+                "Gubitak vode\n" +
+                "Prosječan čovjek gubi 2 - 3 litre vode svaki dan, čak i oni koji se u hladu odmaraju gube 1 litru\n" +
+                "vode. Samo disanjem se gubi tekućina, a gubitak putem disanja i znojenja nastaje u međusobnom omjeru\n" +
+                "rada i okolne temperature. Povraćanje i proljev zbog bolesti uzrokuju daljnji gubitak tekućine. Sve to mora\n" +
+                "biti nadomješteno kako se ne bi poremetila ravnoteža vode; bilo vodom za piće ili vodom iz hrane.", "Voda je jedan od bitnih elemenata za život", R.drawable.ic_voda);
+
+        SurvivalText s5 = new SurvivalText("Kondenzacija", "Korijenje drveća i biljaka upija vlagu iz zemlje.\n" +
+                "doseže vodene \"ploče\" (površine) na dubini od otprilike 15 metara, što je inače preduboko za kopanje. To\n" +
+                "nemojte niti pokušavati. Pustite neka drvo izvlači vodu i vlagu, a Vi zavežite plastičnu vreću oko grane s\n" +
+                "lišćem. Isparavanje iz listova proizvest će kondenzaciju i kapljice kondenzata sakupljat će se u dnu vreće.\n" +
+                "Izaberite zdravu vegetaciju i bujne grane. Za granu privežite usta vreće kako bi donji kutevi vreće visjeli\n" +
+                "prema dolje gdje će se sakupljati kondenzirana tekućina.\n" +
+                "Stavljanje najlonske vrećice preko bilo kakve vegetacije na zemlji, također će sakupljati vlagu dobivenu\n" +
+                "isparavanjem\n" +
+                "Objesite vrećicu sa vrha ili poduprite štapom. Ne dozvolite da lišće dodiruje stijenke vrećice jer će\n" +
+                "pokupiti kondenzirane kapi vode koje bi se trebale sakupljati u ispod napravljen kanalić obložen folijom.\n" +
+                "Čak i odsječena vegetacija može proizvesti kondenzaciju kada se,stavljena u prostranu vreću, zagrije.\n" +
+                "Lišće bilja treba odmaknuti od tla s kamenjem tako da se voda sakuplja ispod biljke i isto tako ne dozvoliti\n" +
+                "da lišće dodiruje vreću. Oblikujte vrh vrećice, podupirući je štapom (iznutra). Uredite vrećicu sa neznatnim",
+                "Korijenje drveća i biljaka upija vlagu iz zemlje, premda drveće može upijati i vodu korijenjem.", R.drawable.ic_kondenz);
+
+        SurvivalText s6 = new SurvivalText("Zamke", "Većinu malog plema lakše je uloviti u zamku nego poći u lov na njih. Ako lovite\n" +
+                "male životinje potrebne su relativno male zamke koje se lako mogu prikriti. Lov zamkama zahtijeva manje\n" +
+                "vještine, što ostavlja dovoljno vremena za potragu za drugom hranom. Uvijek budite spremni kada imate\n" +
+                "prednost i priliku uloviti životinju koja miruje. Puno je poznatih zamki koje rade na principu kompliciranih\n" +
+                "mehanizama. Za njih treba vremena u postavljanju, što zahtijeva dodatni fizički napor. Čovjeku za\n" +
+                "preživljavanje trebaju jednostavne zamke, lagane za konstrukciju i pamćenje načina izrade. Kako bilo,\n" +
+                "zato što svaka životinja ima drugo stanište, bitne su sve vrste i oblici zamki. Ako jedna zamka zakaže, za\n" +
+                "nju postoji i druga varijanta, što se iznalazi na temelju pokusa i pogrešaka.\n" +
+                "Osobna prevencija (zaštita) čovjeka u preživljavanju, mora imati prednost nad humanitarnim\n" +
+                "principima i na žalost neke od lakših zamki mogu uzrokovati patnju i mučenje životinje. Zamke koje će\n" +
+                "brzo usmrtiti plijen kojem su namijenjene, možda davljenjem, mogu uloviti drugu životinju, na primjer, uz\n" +
+                "pomoć grane drveta od koje je konstruirana i ostaviti je da se muči satima. Povremena i redovita provjera\n" +
+                "zamki je bitna. Ostavljajući zamku neprovjerenu, mučenje životinje može se produžiti, a tako i rizik da ulov\n" +
+                "ukrade životinja grabljivica, odnosno da se životinja lako oslobodi. Neke životinje moći će uništiti zamku ili\n" +
+                "učiniti sve da se iz nje izvuku. Većina grešaka može se izbjeći proučavanjem životinjskih staništa. Također\n" +
+                "je važan izbor mamca i mjesta za zamku. Ako jedna zamka ne uspije, pokušajte s drugom. BUDITE\n" +
+                "STRPLJIVI. Za lov zamkom treba dosta vremena. I životinje mogu biti vrlo sumnjičave u prvo vrijeme, ali\n" +
+                "se kasnije toga oslobode i ulete ravno u zamku. Čak i kada ste u pokretu, nekoliko jednostavnih zamki\n" +
+                "koje se preko noći mogu postaviti, donijet će rezultate, a kada ćete raditi privremeni tabor, možete\n" +
+                "postaviti cijeli \"lanac\" zamki. Što ih više postavite, veće su i šanse za ulov. Postavite što veći lanac zamki,\n" +
+                "koliko možete nadzirati to područje.", "Većinu malog plena lakše je uloviti u zamku nego poći u lov na njih.", R.drawable.ic_zamka);
+
+        SurvivalText s7 = new SurvivalText("Lov", "Jasno opažanje znakova divljeg života i poznavanje životinja koje lovite potrebno je lovcu koliko i\n" +
+                "vješto traganje i označavanje na području. To olakšava čovjeku da se snađe na pravom mjestu i stekne\n" +
+                "prednost na terenu. Po terenu se valja kretati što nečujnije, polako te povremeno zastati. Težinu tijela\n" +
+                "prebacujte na onu nogu kojom ne iskoračujete, tako da možete procijeniti slijedeći korak, odnosno\n" +
+                "podlogu na koju ćete stati prije nego prebacite težinu. Tako se izbjegava spoticanje i smanjuje buka\n" +
+                "gaženja po raslinju i lomljenja grančica. Brzo i iznenadno kretanje preplašit će divljač. Njušite zrak i\n" +
+                "osluškujte. Lovite u smjeru suprotnom od vjetra, a ako baš morate, krećite se bočno od smjera vjetra.\n" +
+                "Idealno vrijeme za lov je u zoru kada je većina divljači troma. Životinje su također tromije u predvečerje, ali\n" +
+                "isto tako se smanjuje dnevna svjetlost te tako morate biti sigurni da poznajete teren i put natrag do svoga\n" +
+                "tabora. U području koje dobro poznajete to neće biti problem, pogotovo ako je noću nebo vedro i ako je\n" +
+                "mjesečina, odnosno kada je vidljivost dosta dobra.\n" +
+                "Ako lovite noću, krenite najmanje jedan sat prije sumraka tako da se oči priviknu na smanjenje\n" +
+                "svjetlosti i na noćne uvjete - premda će životinje najvjerojatnije bolje vidjeti od Vas. Kada lovite po danu,\n" +
+                "pokušajte se kretati uzbrdo ujutro (ako je takva konfiguracija terena) i vraćati se u tabor poslijepodne.\n" +
+                "Promatranje životinjskih tragova bit će lakše ako se krećete uzbrdo jer su tako tragovi bliži razini očiju.\n" +
+                "Toplotne struje pod zemljom potpomognute toplinom tijekom dana nose miris divljači prema gore te tako\n" +
+                "pri povratku nizbrdo nailazite na taj miris. Nakon isteka dana, lova i traganja, silaženje oduzima manje\n" +
+                "energije nego penjanje uzbrdo te ćete se lakše kretati.\n" +
+                "Ako se krećete ispravno, u većini slučajeva divljač Vas neće primijetiti. Ako Vas životinja načas\n" +
+                "opazi, ostanite na mjestu. Možda ste prvi čovjek kojeg je životinja vidjela i bit će više radoznala nego\n" +
+                "uplašena. Ostanite mirni i nepomični sve dok divljač ne skrene pogled ili se nastavi hraniti. Izbjegavajte\n" +
+                "velike životinje kao što su medvjedi, osim ako ste čvrsto uvjereni da ih možete ubiti prvim pogotkom: u\n" +
+                "protivnom postat ćete lovina umjesto lovca.\n" +
+                "Približite se što je više moguće bez otkrivanja svoje nazočnosti te zauzmite čvrstu i sigurnu\n" +
+                "poziciju, koja pruža pogled na šire područje. Direktan pogodak u glavu životinje vrlo je učinkovit, ali i\n" +
+                "riskantan osim ako ste blizu životinji koja miruje. Ciljanje straga u prednji dio ramena, dobra je meta. Čvrst\n" +
+                "i precizan udarac, bacit će većinu životinja. Loš udarac može značiti nepotrebnu agoniju životinje i dug put\n" +
+                "kojim ćete je potom slijediti. Ako životinja padne nakon prvog udarca, pričekajte pet minuta prije nego se\n" +
+                "približite. Ostanite na mjestu i promatrajte. Ako životinja nije mrtva, a krvari, gubitak krvi dodatno će je\n" +
+                "oslabiti, a kada se približite ona neće biti u stanju pobjeći. Ako je životinja ranjena i nastavlja se kretati,\n" +
+                "pričekajte 15 minuta prije nego je počnete slijediti. Ako krenete odmah za njom može se desiti da ćete je\n" +
+                "slijediti cijeli dan.",
+                "Jasno opažanje znakova divljeg života i poznavanje životinja koje lovite potrebno je lovcu.", R.drawable.ic_lov);
+
+        SurvivalText s8 = new SurvivalText("Oružje", "Luk i strijela\n" +
+                "Najučinkovitiji su od improviziranog oružja. Luk i strijelu je lako napraviti. Potrebno je malo\n" +
+                "vremena za postizanje vještine rukovanja. Najbolje drvo za luk je tzv. “sezonsko”, što ne znači da ćete\n" +
+                "uvijek uspješno izraditi luk od takvog drveta. Ako namjeravate na nekom području ostati nekoliko mjeseci,\n" +
+                "sezonsko drvo može zastarjeti, odnosno preživjeti sezonu, stoga je poželjno napraviti nekoliko lukova od\n" +
+                "različitog drveta u sezoni, pošto ona koja su zastarjela gube svoju elastičnost.\n" +
+                "Za takve prilike četinjače su idealne - svi stari engleski lukovi načinjeni su od takve vrste drveta. Postoji\n" +
+                "pet vrsta četinjača koje se distribuiraju sjevernom hemisferom, ali između sebe nemaju puno zajedničkog.\n" +
+                "Zimzeleno drvo, hrast, bijeli brijest, cedar, breza, vrba i kukuta su za to dobar nadomjestak.", "Luk i strijela\n" +
+                "Najučinkovitiji su od improviziranog oružja.", R.drawable.ic_oruzije);
+
 
         survivalTextDao.create(s1);
         survivalTextDao.create(s2);
         survivalTextDao.create(s3);
         survivalTextDao.create(s4);
+        survivalTextDao.create(s5);
+        survivalTextDao.create(s6);
+        survivalTextDao.create(s7);
+        survivalTextDao.create(s8);
 
         Log.d("DATABASE_INIT", "Database has initilize");
     }

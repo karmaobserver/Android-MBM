@@ -2,20 +2,15 @@ package com.mbm.ftn.mbm.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import com.mbm.ftn.mbm.R;
+import com.mbm.ftn.mbm.adapters.SurvivalTextAdapter;
 import com.mbm.ftn.mbm.dao.SurvivalTextDao;
 import com.mbm.ftn.mbm.models.SurvivalText;
-import com.mbm.ftn.mbm.adapters.SurvivalTextAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -24,7 +19,7 @@ import static android.widget.Toast.LENGTH_SHORT;
  * Created by Boris K on 25-Apr-17.
  */
 
-public class SurvivalTextActivity extends FragmentActivity {
+public class SurvivalTextActivity extends BaseActivity {
 
     private List<SurvivalText> textList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -38,7 +33,9 @@ public class SurvivalTextActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
        if (savedInstanceState == null) {
-            initGui();
+
+           initGui();
+           //String value = getIntent().getExtras().getString("text");
 
         }
 
@@ -51,6 +48,7 @@ public class SurvivalTextActivity extends FragmentActivity {
     }
 
     private void initGui() {
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             Toast.makeText(this, "landscape SurvivalTextActivity", LENGTH_SHORT).show();
@@ -61,6 +59,12 @@ public class SurvivalTextActivity extends FragmentActivity {
             Toast.makeText(this, "portrait SurvivalTextActivity", LENGTH_SHORT).show();
             setContentView(R.layout.activity_survival_text_portrait);
         }
+      /*  Toolbar toolbar = (Toolbar) findViewById(R.id.text_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setLogo(R.mipmap.ic_important_numbers);
+        getSupportActionBar().setTitle("Text Prezivljavanja");
+        getSupportActionBar().setDisplayUseLogoEnabled(true);*/
     }
 
     @Override

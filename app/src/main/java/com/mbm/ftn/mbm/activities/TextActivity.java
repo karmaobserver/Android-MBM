@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +36,8 @@ public class TextActivity extends BaseActivity {
 
         tv1.setText(topic);
         tv2.setText(text);
+
+        tv2.setMovementMethod(new ScrollingMovementMethod());
    //     iv.setImageResource(image);
 
 

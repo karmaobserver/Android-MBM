@@ -1,16 +1,16 @@
 package com.mbm.ftn.mbm.fragments;
 
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.adapters.SurvivalTextAdapter;
@@ -19,8 +19,6 @@ import com.mbm.ftn.mbm.models.SurvivalText;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Boris K on 15-Jun-17.
@@ -50,7 +48,14 @@ public class SurvivalTextListFragment extends Fragment {
         sAdapter = new SurvivalTextAdapter(textList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
+
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
         recyclerView.setAdapter(sAdapter);
+
+
+
         prepareTextData();
 
         return view;

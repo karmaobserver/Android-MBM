@@ -3,14 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@drawable/background_gradient_color"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/view_topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="15dp"
+        android:maxLines = "10"
+        android:scrollbars = "vertical"
+        android:gravity="center"
+        android:textColor="@color/color_black"
+        android:layout_margin="5dp"
         android:textSize="30sp" />
 
 
@@ -19,8 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:textColor="@color/color_black"
         android:layout_marginLeft="15dp"
-
+        android:layout_marginRight="15dp"
         android:textSize="20sp" />
 
 

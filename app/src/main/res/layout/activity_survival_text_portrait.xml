@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_survival_text_portrait"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Load the toolbar here -->
+    <include
+        layout="@layout/toolbar_main"
+        android:id="@+id/text_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <fragment android:name="com.mbm.ftn.mbm.fragments.SurvivalTextListFragment"
         android:id="@+id/survival_text_fragment"
         android:layout_weight="1"
         android:layout_width="match_parent"
+        android:background="@drawable/background_gradient_color"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -15,9 +15,6 @@ import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.models.SurvivalText;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Makso on 5/23/2017.
  */
@@ -28,7 +25,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "MbmDB.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 64;
+    private static final int DATABASE_VERSION = 70;
 
     // the DAO object we use to access the SimpleData table
     //pressure
