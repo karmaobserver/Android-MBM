@@ -16,7 +16,7 @@
 
         <ImageButton
             android:id="@+id/image_button_sms"
-            android:src="@drawable/phone"
+            android:src="@drawable/sms"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
@@ -40,7 +40,7 @@
 
         <ImageButton
             android:id="@+id/image_button_email"
-            android:src="@drawable/web"
+            android:src="@drawable/email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
