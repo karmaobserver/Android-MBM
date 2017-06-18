@@ -34,7 +34,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     private static ViewHolder.ClickListener clickListener;
     private List<City> cityList;
 
-
     /////////////////////////////////////Beginning of inner class///////////////////////////////////////////
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -84,7 +83,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
                 intent.putExtra("city", name.getText().toString());
                 v.getContext().startActivity(intent);
 
-                android.support.v4.app.FragmentManager fragmentManager =  ((ImportantNumbersActivity)parent.getContext()).getSupportFragmentManager();
+                //android.support.v4.app.FragmentManager fragmentManager =  ((ImportantNumbersActivity)parent.getContext()).getSupportFragmentManager();
                 /*android.support.v4.app.FragmentManager fragmentManager = ((ImportantNumbersActivity) v.getContext()).getSupportFragmentManager();
                 Fragment prev = fragmentManager.findFragmentByTag("showChooseCityDialogTAG");
                 if (prev != null) {
