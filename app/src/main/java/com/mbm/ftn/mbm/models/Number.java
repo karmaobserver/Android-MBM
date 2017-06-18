@@ -48,6 +48,15 @@ public class Number extends BaseModel implements Serializable{
         this.city = city;
     }
 
+    public Number(String title, String number, String description, String website, String address, City city) {
+        this.title = title;
+        this.number = number;
+        this.description = description;
+        this.website = website;
+        this.address = address;
+        this.city = city;
+    }
+
     public String getTitle() {
         return title;
     }
