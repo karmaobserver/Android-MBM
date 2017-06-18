@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Boris K on 30-May-17.
@@ -48,9 +45,9 @@ public class TextActivity extends BaseActivity {
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape TextActivity", LENGTH_SHORT).show();
+            finish();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait TextActivity", LENGTH_SHORT).show();
+
         }
     }
 

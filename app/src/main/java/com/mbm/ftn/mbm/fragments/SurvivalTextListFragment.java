@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Boris K on 15-Jun-17.
  */
 
-public class SurvivalTextListFragment extends Fragment {
+public class SurvivalTextListFragment extends Fragment{
 
     private RecyclerView recyclerView;
     private SurvivalTextAdapter sAdapter;
@@ -37,6 +37,7 @@ public class SurvivalTextListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -53,9 +54,6 @@ public class SurvivalTextListFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         recyclerView.setAdapter(sAdapter);
-
-
-
         prepareTextData();
 
         return view;
@@ -67,4 +65,5 @@ public class SurvivalTextListFragment extends Fragment {
         textList.addAll(survivalTextDao.findAll());
         sAdapter.notifyDataSetChanged();
     }
+
 }
