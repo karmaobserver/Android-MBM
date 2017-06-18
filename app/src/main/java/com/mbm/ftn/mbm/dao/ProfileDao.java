@@ -137,9 +137,9 @@ public class ProfileDao implements Crud {
             try {
                 QueryBuilder<Profile, Integer> profileQb = helper.getProfileDao().queryBuilder();
 
-                profileQb.where().eq(Profile.CHECKED_FIELD_NAME, true);
+                results = profileQb.where().eq(Profile.CHECKED_FIELD_NAME, true).query();
 
-                results = profileQb.query();
+               // results = profileQb.query();
                 Log.d("REZULTAT", "JE: " + results.size());
             } catch (SQLException e) {
                 Log.d("REZULTAT", "JE: CATCH");

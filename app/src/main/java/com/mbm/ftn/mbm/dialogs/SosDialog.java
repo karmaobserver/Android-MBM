@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,13 @@ import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.activities.NumbersActivity;
+import com.mbm.ftn.mbm.dao.NumberDao;
+import com.mbm.ftn.mbm.dao.ProfileDao;
+import com.mbm.ftn.mbm.models.Profile;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Makso on 6/18/2017.
@@ -34,6 +42,9 @@ public class SosDialog extends DialogFragment {
     private TextView emailTextView;
     private LinearLayout smsLinearLayout;
     private LinearLayout emailLinearLayout;
+
+    private List<Profile> profileList = new ArrayList<>();
+    ProfileDao profileDao = null;
 
     public SosDialog() {
         // Empty constructor is required for DialogFragment
@@ -100,16 +111,31 @@ public class SosDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0643748805"));
-                intent.putExtra("sms_body", "Test");
-                startActivity(intent);
+                boolean isNull = false;
+                profileDao = new ProfileDao(getContext());
+                //profileList = profileDao.findAllCheckedProfiles();
+                try {
+                    profileList = profileDao.findAllCheckedProfiles();
+                } catch (NullPointerException e) {
+                    Toast.makeText(v.getContext(), "Make profiles first and select", Toast.LENGTH_SHORT).show();
+                    isNull = true;
+                }
+                if (!isNull && profileList.size()!= 0) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String message = null;
+                    stringBuilder.append("sms:");
+                    for (Profile profile : profileList) {
+                        stringBuilder.append(profile.getPhone().toString());
+                        stringBuilder.append(";");
+                        message = profile.getPhone().toString();
 
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(stringBuilder.toString()));
+                    intent.putExtra("sms_body", message);
+                    startActivity(intent);
+                }
                 dismiss();
-
-                /*profileList = profileDao.findAllCheckedProfiles();
-                for (Profile profile : profileList) {
-
-                }*/
             }
         });
 
@@ -118,13 +144,34 @@ public class SosDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto","makso.the.one@gmail.com", null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SOS");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "TEST");
-                startActivity(Intent.createChooser(emailIntent, "Send email..."));
 
+                boolean isNull = false;
+                profileDao = new ProfileDao(getContext());
+                //profileList = profileDao.findAllCheckedProfiles();
+                try {
+                    profileList = profileDao.findAllCheckedProfiles();
+                } catch (NullPointerException e) {
+                    Toast.makeText(v.getContext(), "Make profiles first and select", Toast.LENGTH_SHORT).show();
+                    isNull = true;
+                }
+                if (!isNull && profileList.size()!= 0) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String message = null;
+                    for (Profile profile : profileList) {
+                        stringBuilder.append(profile.getEmail().toString());
+                        stringBuilder.append(", ");
+                        message = profile.getPhone().toString();
+                    }
 
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto",stringBuilder.toString(), null));
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SOS");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, message);
+                    startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+                }
+
+                dismiss();
 
             }
         });

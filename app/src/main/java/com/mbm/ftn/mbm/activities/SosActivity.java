@@ -59,10 +59,6 @@ import java.util.List;
         private ArrayList<LatLng> points; //added
         Polyline line;
 
-        private List<Profile> profileList = new ArrayList<>();
-        ProfileDao profileDao = null;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
