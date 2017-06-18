@@ -15,8 +15,8 @@ public class Number extends BaseModel implements Serializable{
     public static final String CITY_FIELD_NAME = "city";
 
     @DatabaseField
-    private String title;
 
+    private String title;
     @DatabaseField
     private String number;
 
@@ -55,6 +55,14 @@ public class Number extends BaseModel implements Serializable{
         this.website = website;
         this.address = address;
         this.city = city;
+    }
+
+    public Number(String title, String number, String description, String website, String address) {
+        this.title = title;
+        this.number = number;
+        this.description = description;
+        this.website = website;
+        this.address = address;
     }
 
     public String getTitle() {

@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
+import com.mbm.ftn.mbm.models.NumberInCity;
 import com.mbm.ftn.mbm.models.NumberInList;
 import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
@@ -26,7 +27,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "MbmDB.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 155;
+    private static final int DATABASE_VERSION = 177;
 
     // the DAO object we use to access the SimpleData table
     //pressure
@@ -36,6 +37,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<NumberList, Integer> numberListDao = null;
     private Dao<SurvivalText, Integer> survivalTextDao = null;
     private Dao<NumberInList, Integer> numberInListDao = null;
+    private Dao<NumberInCity, Integer> numberInCityDao = null;
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -165,5 +168,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return numberInListDao;
+    }
+
+    public Dao<NumberInCity, Integer> getNumberInCityDao() {
+        if (null == numberInCityDao) {
+            try {
+                numberInCityDao = getDao(NumberInCity.class);
+            }catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return numberInCityDao;
     }
 }
