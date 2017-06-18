@@ -1,8 +1,10 @@
 package com.mbm.ftn.mbm.activities;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -18,25 +20,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mbm.ftn.mbm.R;
-import com.mbm.ftn.mbm.dao.ProfileDao;
-import com.mbm.ftn.mbm.dialogs.ChooseCityDialog;
 import com.mbm.ftn.mbm.dialogs.SosDialog;
-import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.utils.PermissionUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -46,7 +47,9 @@ import java.util.List;
     public class SosActivity extends BaseActivity implements GoogleMap.OnMyLocationButtonClickListener,
             OnMapReadyCallback,
             ActivityCompat.OnRequestPermissionsResultCallback,
-            LocationListener
+            LocationListener,
+        GoogleMap.OnMapLongClickListener,
+        GoogleMap.OnMapClickListener
     {
 
         private static final LatLng DARWIN = new LatLng(-12.4258647, 130.7932231);
@@ -57,7 +60,12 @@ import java.util.List;
         private boolean mPermissionDenied = false;
         private LocationManager locationManager;
         private ArrayList<LatLng> points; //added
+        Marker marker;
         Polyline line;
+        SharedPreferences sharedPreferences;
+        int locationCount = 0;
+        Polyline polylineFinal;
+        PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,9 @@ import java.util.List;
 
 
         points = new ArrayList<LatLng>();
+
+        // Opening the sharedPreferences object
+
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -108,6 +119,15 @@ import java.util.List;
             }
         });
     }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+
+        }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,8 +181,10 @@ import java.util.List;
     public void onMapReady(GoogleMap map) {
 
         mMap = map;
-
+        mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
         mMap.setOnMyLocationButtonClickListener(this);
+
 
         enableMyLocation();
         UiSettings uiSettings = map.getUiSettings();
@@ -170,11 +192,54 @@ import java.util.List;
         uiSettings.setCompassEnabled(true);
         uiSettings.setMapToolbarEnabled(true);
 
+
         /*map.addPolyline(new PolylineOptions()
                 .add(DARWIN, MELBOURNE)
                 .width(INITIAL_STROKE_WIDTH_PX)
                 .color(Color.BLUE)
                 .geodesic(true));*/
+
+        // Getting LocationManager object from System Service LOCATION_SERVICE
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        // Opening the sharedPreferences object
+        sharedPreferences = getSharedPreferences("location", 0);
+
+        // Getting number of locations already stored
+        locationCount = sharedPreferences.getInt("locationCount", 0);
+
+        // Getting stored zoom level if exists else return 0
+        String zoom = sharedPreferences.getString("zoom", "0");
+
+        // If locations are already saved
+        if(locationCount!=0){
+
+            String lat = "";
+            String lng = "";
+
+            // Iterating through all the locations stored
+            for(int i=0;i<locationCount;i++){
+
+                // Getting the latitude of the i-th location
+                lat = sharedPreferences.getString("lat"+i,"0");
+
+                // Getting the longitude of the i-th location
+                lng = sharedPreferences.getString("lng"+i,"0");
+
+                // Drawing marker on the map
+                drawMarker(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
+
+                // Drawing circle on the map
+                drawCircle(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
+            }
+
+            // Moving CameraPosition to last clicked position
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))));
+
+            // Setting the zoom level in the map on last position  is clicked
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(Float.parseFloat(zoom)));
+        }
+
 
     }
 
@@ -201,6 +266,8 @@ import java.util.List;
         return false;
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -217,6 +284,7 @@ import java.util.List;
             mPermissionDenied = true;
         }
     }
+
 
     @Override
     protected void onResumeFragments() {
@@ -254,7 +322,8 @@ import java.util.List;
     }
 
     private void redrawLine() {
-        mMap.clear();  //clears all Markers and Polylines
+        //mMap.clear();  //clears all Markers and Polylines
+        //polylineFinal.remove();
 
         PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
         for (int i = 0; i < points.size(); i++) {
@@ -284,4 +353,120 @@ import java.util.List;
     }
 
 
-}
+        @Override
+        public void onMapLongClick(LatLng latLng) {
+
+
+            // Removing the marker and circle from the Google Map
+            mMap.clear();
+
+            // Opening the editor object to delete data from sharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            // Clearing the editor
+            editor.clear();
+
+            // Committing the changes
+            editor.commit();
+
+            // Setting locationCount to zero
+            locationCount=0;
+
+
+        }
+
+        @Override
+        public void onMapClick(LatLng point) {
+            // Incrementing location count
+            locationCount++;
+
+            // Drawing marker on the map
+            drawMarker(point);
+
+            // Drawing circle on the map
+            drawCircle(point);
+
+            // This intent will call the activity ProximityActivity
+            Intent proximityIntent = new Intent("com.mbm.ftn.mbm.activity.proximity");
+            proximityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Passing latitude to the PendingActivity
+            proximityIntent.putExtra("lat",point.latitude);
+
+            // Passing longitude to the PendingActivity
+            proximityIntent.putExtra("lng", point.longitude);
+
+            // Creating a pending intent which will be invoked by LocationManager when the specified region is
+            // entered or exited
+            pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, proximityIntent,0);
+
+            // Setting proximity alert
+            // The pending intent will be invoked when the device enters or exits the region 20 meters
+            // away from the marked point
+            // The -1 indicates that, the monitor will not be expired
+            try {
+                locationManager.addProximityAlert(point.latitude, point.longitude, 20, -1, pendingIntent);
+            }
+            catch(SecurityException e) {
+                Toast.makeText(SosActivity.this,
+                        "Doslo je do greske",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            /** Opening the editor object to write data to sharedPreferences */
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            // Storing the latitude for the i-th location
+            editor.putString("lat"+ Integer.toString((locationCount-1)), Double.toString(point.latitude));
+
+            // Storing the longitude for the i-th location
+            editor.putString("lng"+ Integer.toString((locationCount-1)), Double.toString(point.longitude));
+
+            // Storing the count of locations or marker count
+            editor.putInt("locationCount", locationCount);
+
+            /** Storing the zoom level to the shared preferences */
+            editor.putString("zoom", Float.toString(mMap.getCameraPosition().zoom));
+
+            /** Saving the values stored in the shared preferences */
+            editor.commit();
+
+            Toast.makeText(getBaseContext(), "Destinacija dodata na mapi", Toast.LENGTH_SHORT).show();
+
+        }
+
+        private void drawMarker(LatLng latLng) {
+            MarkerOptions markerOptions = new MarkerOptions();
+
+            // Setting latitude and longitude for the marker
+            markerOptions.position(latLng);
+
+            // Adding marker on the Google Map
+            mMap.addMarker(markerOptions);
+        }
+
+        private void drawCircle(LatLng point){
+
+            // Instantiating CircleOptions to draw a circle around the marker
+            CircleOptions circleOptions = new CircleOptions();
+
+            // Specifying the center of the circle
+            circleOptions.center(point);
+
+            // Radius of the circle
+            circleOptions.radius(20);
+
+            // Border color of the circle
+            circleOptions.strokeColor(Color.BLACK);
+
+            // Fill color of the circle
+            circleOptions.fillColor(0x30ff0000);
+
+            // Border width of the circle
+            circleOptions.strokeWidth(2);
+
+            // Adding the circle to the GoogleMap
+            mMap.addCircle(circleOptions);
+
+        }
+    }
