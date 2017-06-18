@@ -24,6 +24,16 @@
     <!--dialog-->
     <string name="dialog_title_sos">SOS slanje poruke</string>
 
+    <string name="location_text">Poslednja poznata lokacija korisnika bila je: </string>
+    <string name="make_profile_first">Napravite prvo profile a zatim odaberite profile</string>
+
+    <!--profiles-->
+    <string name="edit_succeed">Uspešna izmena profila</string>
+    <string name="edit_failed">Neuspešna izmena profila</string>
+    <string name="create_succeed">Uspešno kreiran profil</string>
+    <string name="create_failed">Neuspešno kreiran profil</string>
+    <string name="valid_email">Unesite validnu email adresu</string>
+    <string name="char1to30">Od 1 do najviše 30 karaktera</string>
 
     <!-- Weather conditions label strings -->
     <string name="temperature_with_degree" translatable="false">%s\u00B0</string>

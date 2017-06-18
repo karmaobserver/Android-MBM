@@ -142,6 +142,7 @@ public class NumberPickedDialog extends DialogFragment {
                     return;
                 }
                 startActivity(callIntent);
+                dismiss();
             }
         });
 
@@ -155,6 +156,7 @@ public class NumberPickedDialog extends DialogFragment {
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW);
                 websiteIntent.setData(Uri.parse(url));
                 startActivity(websiteIntent);
+                dismiss();
             }
         });
 
@@ -167,6 +169,7 @@ public class NumberPickedDialog extends DialogFragment {
                 Uri uri = Uri.parse(uriBegin);
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
                 startActivity(intent);
+                dismiss();
 
                 //if i need coordinates
                /* double latitude = 40.714728;
