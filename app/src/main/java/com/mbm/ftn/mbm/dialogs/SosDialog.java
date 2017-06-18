@@ -23,6 +23,7 @@ import com.mbm.ftn.mbm.activities.NumbersActivity;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.ProfileDao;
 import com.mbm.ftn.mbm.models.Profile;
+import com.mbm.ftn.mbm.utils.GPSTracker;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -94,17 +95,31 @@ public class SosDialog extends DialogFragment {
         // Fetch arguments from bundle and set title
         String titleName = getArguments().getString("titleName");
 
-
         getDialog().setTitle(titleName);
 
-        if(smsTextView.getText() == null || smsTextView.getText().toString().isEmpty())
-        {
-            smsLinearLayout.setVisibility(View.GONE);
+        GPSTracker gpsTracker = new GPSTracker(getContext());
+        String latitude = null;
+        String longitude = null;
+        String latitude2 = null;
+        String longitude2 = null;
+
+        if (gpsTracker.canGetLocation()) {
+            latitude =  String.format("%.4f", gpsTracker.getLatitude());
+            longitude = String.format("%.4f",gpsTracker.getLongitude());
+        } else {
+            Toast.makeText(view.getContext(), "Lokacija nije dostupna", Toast.LENGTH_SHORT).show();
         }
-        if(emailTextView.getText() == null || emailTextView.getText().toString().isEmpty())
-        {
-            emailLinearLayout.setVisibility(View.GONE);
-        }
+
+        String locationText = getResources().getString(R.string.location_text);
+
+        final StringBuilder location = new StringBuilder();
+        location.append(locationText);
+        location.append(" ");
+        location.append(latitude);
+        location.append(" , ");
+        location.append(longitude);
+        location.append(". ");
+
 
         ImageButton smsImageButton = (ImageButton) view.findViewById(R.id.image_button_sms);
         smsImageButton.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +132,7 @@ public class SosDialog extends DialogFragment {
                 try {
                     profileList = profileDao.findAllCheckedProfiles();
                 } catch (NullPointerException e) {
-                    Toast.makeText(v.getContext(), "Make profiles first and select", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(),  getResources().getString(R.string.make_profile_first), Toast.LENGTH_SHORT).show();
                     isNull = true;
                 }
                 if (!isNull && profileList.size()!= 0) {
@@ -127,13 +142,15 @@ public class SosDialog extends DialogFragment {
                     for (Profile profile : profileList) {
                         stringBuilder.append(profile.getPhone().toString());
                         stringBuilder.append(";");
-                        message = profile.getPhone().toString();
+                        message = profile.getMessage().toString();
 
                     }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(stringBuilder.toString()));
-                    intent.putExtra("sms_body", message);
+                    intent.putExtra("sms_body", location + message );
                     startActivity(intent);
+                } else {
+                    Toast.makeText(v.getContext(), getResources().getString(R.string.make_profile_first), Toast.LENGTH_SHORT).show();
                 }
                 dismiss();
             }
@@ -151,7 +168,7 @@ public class SosDialog extends DialogFragment {
                 try {
                     profileList = profileDao.findAllCheckedProfiles();
                 } catch (NullPointerException e) {
-                    Toast.makeText(v.getContext(), "Make profiles first and select", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), getResources().getString(R.string.make_profile_first), Toast.LENGTH_SHORT).show();
                     isNull = true;
                 }
                 if (!isNull && profileList.size()!= 0) {
@@ -160,15 +177,17 @@ public class SosDialog extends DialogFragment {
                     for (Profile profile : profileList) {
                         stringBuilder.append(profile.getEmail().toString());
                         stringBuilder.append(", ");
-                        message = profile.getPhone().toString();
+                        message = profile.getMessage().toString();
                     }
 
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                             "mailto",stringBuilder.toString(), null));
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SOS");
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, message);
-                    startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, location + message);
+                    startActivity(Intent.createChooser(emailIntent, "Slanje emaila..."));
 
+                } else {
+                    Toast.makeText(v.getContext(), getResources().getString(R.string.make_profile_first), Toast.LENGTH_SHORT).show();
                 }
 
                 dismiss();

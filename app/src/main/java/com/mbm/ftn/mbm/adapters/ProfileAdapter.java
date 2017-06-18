@@ -135,7 +135,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                     }
 
                     notifyDataSetChanged();
-                    Toast.makeText(v.getContext(), "Delete was successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Uspešno obrisan profil", Toast.LENGTH_SHORT).show();
 
                 } else if (v.getId() == R.id.edit){
 

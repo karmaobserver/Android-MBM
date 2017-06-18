@@ -264,10 +264,6 @@ public class ImportantNumbersActivity extends BaseActivity {
                 Toast.makeText(this, "SEARCH is selected!"+item.getTitle(), Toast.LENGTH_SHORT).show();*/
                 return true;
 
-            case R.id.action_gps:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

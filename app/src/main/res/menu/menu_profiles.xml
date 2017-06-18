@@ -11,9 +11,6 @@
         android:icon="@drawable/ic_add_circle"
         android:title="Add profile"/>
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="Settings">
-    </item>
+
 
 </menu>

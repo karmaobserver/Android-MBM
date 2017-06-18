@@ -97,8 +97,6 @@ public class ChooseCityDialog extends DialogFragment {
 
         recyclerView.setAdapter(cityAdapter);
 
-
-
         Button button = (Button) view.findViewById(R.id.button_close);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
