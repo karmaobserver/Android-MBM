@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
@@ -72,21 +71,21 @@ public class WeatherActivity extends AppCompatActivity implements AppBarLayout.O
 
     private Menu mToolbarMenu;
 
-    private SharedPreferences mPrefWeather;
+
     private SwipeRefreshLayout mSwipeRefresh;
     private Boolean isNetworkAvailable;
     private ConnectionDetector connectionDetector;
 
-    private LocationManager locationManager;
 
-    private double longitude1;
-    private double latitude1;
-    private static String currentCity;
+
 
     private String search;
 
-    long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 500; // in Meters
-    long MINIMUM_TIME_BETWEEN_UPDATES = 60000; // in Milliseconds
+
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String currentCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +121,9 @@ public class WeatherActivity extends AppCompatActivity implements AppBarLayout.O
         // Setup activity reference
         // mActivityRef = new WeakReference<>(this);
         mRetainedAppData.setAppContext(this);
-
+        sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        currentCity=sharedPreferences.getString("currentCity", null);
 
         setView();
 
@@ -408,7 +409,13 @@ public class WeatherActivity extends AppCompatActivity implements AppBarLayout.O
 
                 currentCity = data.getName();
 
+
+
+                // Storing the latitude for the i-th location
+                editor.putString("currentCity", currentCity);
+
                 setTitle(data.getName());
+                editor.commit();
 
 
 
