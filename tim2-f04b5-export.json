@@ -1,0 +1,418 @@
+{
+  "firebase" : {
+    "cities" : [ {
+      "id" : 1,
+      "name" : "Beograd"
+    }, {
+      "id" : 2,
+      "name" : "Novi Sad"
+    }, {
+      "id" : 3,
+      "name" : "Srbija"
+    }, {
+      "id" : 4,
+      "name" : "Niš"
+    } ],
+    "numberInCity" : [ {
+      "cityId" : 3,
+      "numberId" : 1
+    }, {
+      "cityId" : 3,
+      "numberId" : 2
+    }, {
+      "cityId" : 3,
+      "numberId" : 3
+    }, {
+      "cityId" : 3,
+      "numberId" : 4
+    }, {
+      "cityId" : 3,
+      "numberId" : 5
+    }, {
+      "cityId" : 3,
+      "numberId" : 6
+    }, {
+      "cityId" : 3,
+      "numberId" : 7
+    }, {
+      "cityId" : 2,
+      "numberId" : 8
+    }, {
+      "cityId" : 2,
+      "numberId" : 9
+    }, {
+      "cityId" : 2,
+      "numberId" : 10
+    }, {
+      "cityId" : 2,
+      "numberId" : 11
+    }, {
+      "cityId" : 2,
+      "numberId" : 12
+    }, {
+      "cityId" : 2,
+      "numberId" : 13
+    }, {
+      "cityId" : 2,
+      "numberId" : 14
+    }, {
+      "cityId" : 1,
+      "numberId" : 15
+    }, {
+      "cityId" : 1,
+      "numberId" : 16
+    }, {
+      "cityId" : 1,
+      "numberId" : 17
+    }, {
+      "cityId" : 3,
+      "numberId" : 18
+    }, {
+      "cityId" : 3,
+      "numberId" : 19
+    }, {
+      "cityId" : 3,
+      "numberId" : 20
+    }, {
+      "cityId" : 4,
+      "numberId" : 21
+    }, {
+      "cityId" : 4,
+      "numberId" : 22
+    }, {
+      "cityId" : 2,
+      "numberId" : 23
+    }, {
+      "cityId" : 2,
+      "numberId" : 24
+    }, {
+      "cityId" : 1,
+      "numberId" : 25
+    }, {
+      "cityId" : 1,
+      "numberId" : 26
+    } ],
+    "numberListList" : [ {
+      "listId" : 1,
+      "numberId" : 1
+    }, {
+      "listId" : 1,
+      "numberId" : 2
+    }, {
+      "listId" : 1,
+      "numberId" : 3
+    }, {
+      "listId" : 1,
+      "numberId" : 4
+    }, {
+      "listId" : 2,
+      "numberId" : 5
+    }, {
+      "listId" : 2,
+      "numberId" : 6
+    }, {
+      "listId" : 2,
+      "numberId" : 7
+    }, {
+      "listId" : 3,
+      "numberId" : 8
+    }, {
+      "listId" : 3,
+      "numberId" : 9
+    }, {
+      "listId" : 3,
+      "numberId" : 10
+    }, {
+      "listId" : 3,
+      "numberId" : 11
+    }, {
+      "listId" : 3,
+      "numberId" : 12
+    }, {
+      "listId" : 3,
+      "numberId" : 13
+    }, {
+      "listId" : 3,
+      "numberId" : 14
+    }, {
+      "listId" : 3,
+      "numberId" : 15
+    }, {
+      "listId" : 3,
+      "numberId" : 16
+    }, {
+      "listId" : 3,
+      "numberId" : 17
+    }, {
+      "listId" : 4,
+      "numberId" : 18
+    }, {
+      "listId" : 4,
+      "numberId" : 19
+    }, {
+      "listId" : 4,
+      "numberId" : 20
+    }, {
+      "listId" : 4,
+      "numberId" : 21
+    }, {
+      "listId" : 4,
+      "numberId" : 22
+    }, {
+      "listId" : 4,
+      "numberId" : 23
+    }, {
+      "listId" : 4,
+      "numberId" : 24
+    }, {
+      "listId" : 4,
+      "numberId" : 25
+    }, {
+      "listId" : 4,
+      "numberId" : 26
+    } ],
+    "numberLists" : [ {
+      "id" : 2,
+      "name" : "Mobilna telefonija"
+    }, {
+      "id" : 3,
+      "name" : "Zdravstvo"
+    }, {
+      "id" : 4,
+      "name" : "Saobraćaj"
+    } ],
+    "numbers" : [ {
+      "description" : "Hitne intervencije hitne pomoći",
+      "id" : 1,
+      "number" : "194",
+      "title" : "Hitna pomoć"
+    }, {
+      "description" : "Hitne intervencije policije",
+      "id" : 2,
+      "number" : "192",
+      "title" : "Policija"
+    }, {
+      "address" : "Omladinskih brigada 1, Beograd",
+      "description" : "Vatrogasna služba",
+      "id" : 3,
+      "number" : "193",
+      "title" : "Vatrogasci"
+    }, {
+      "description" : "Gorska služba spašavanja",
+      "id" : 4,
+      "number" : "+38163466466",
+      "title" : "Gorska služba",
+      "website" : "http://www.gss.rs/"
+    }, {
+      "address" : "Omladinskih brigada 21, Beograd",
+      "id" : 5,
+      "number" : "+381601234",
+      "title" : "Vip mobile",
+      "website" : "https://www.vipmobile.rs/privatni"
+    }, {
+      "address" : "Omladinskih brigada 90, Beograd",
+      "id" : 6,
+      "number" : "+3816390000",
+      "title" : "Telenor",
+      "website" : "https://www.telenor.rs/"
+    }, {
+      "address" : "Branislava Nusića",
+      "id" : 7,
+      "number" : "+38164789",
+      "title" : "MTS",
+      "website" : "https://www.mts.rs/"
+    }, {
+      "id" : 8,
+      "number" : "+381214807187",
+      "title" : "Dom zdravlja Liman"
+    }, {
+      "id" : 9,
+      "number" : "+38121401122",
+      "title" : "Dom zdravlja bistrica"
+    }, {
+      "id" : 10,
+      "number" : "+381214843484",
+      "title" : "Kliničko bolnički centar"
+    }, {
+      "description" : "Bolnica za decu",
+      "id" : 11,
+      "number" : "+38121422699",
+      "title" : "Dečja bolnija"
+    }, {
+      "id" : 12,
+      "number" : "+38121422699",
+      "title" : "Dispanzer"
+    }, {
+      "id" : 13,
+      "number" : "+381214899222",
+      "title" : "Klinika za akušerstvo i ginekologiju"
+    }, {
+      "description" : "Bolnica za decu",
+      "id" : 14,
+      "number" : "+38121422255",
+      "title" : "Higijenski Zavod"
+    }, {
+      "address" : "Karađorđev trg 4",
+      "description" : "Svakog dana 19:00-07:00",
+      "id" : 15,
+      "number" : "+381112600192",
+      "title" : "Noćna ambulanta Zemun"
+    }, {
+      "address" : "Kralja Milana 9",
+      "description" : "svakog dana 00:00-24:00",
+      "id" : 16,
+      "number" : "+381112643170",
+      "title" : "Dežurna apoteka  Prvi Maj"
+    }, {
+      "address" : "Dimitrija Tucovića 161",
+      "id" : 17,
+      "number" : "+381113806969",
+      "title" : "KBC Zvezdara",
+      "website" : "http://www.kbczvezdara.rs/"
+    }, {
+      "address" : "Ruzveltova 18, Zvezdara",
+      "description" : "Pomoć na putu, stanje na putevima, međunarodna dokumenta, saobraćajna...",
+      "id" : 18,
+      "number" : "987",
+      "title" : "Automoto Savez Srbije",
+      "website" : "http://www.amss.org.rs/"
+    }, {
+      "address" : "Beograd",
+      "id" : 19,
+      "number" : "+381112094444",
+      "title" : "Aerodorom Nikola Tesla",
+      "website" : "http://www.beg.aero/"
+    }, {
+      "address" : "Vazduhoplovaca 24",
+      "id" : 20,
+      "number" : "+38118585858",
+      "title" : "Aerodrom Konstantin Veliki",
+      "website" : "http://nis-airport.com/en/"
+    }, {
+      "id" : 21,
+      "number" : "+38118255177",
+      "title" : "Autobuska stanica"
+    }, {
+      "id" : 22,
+      "number" : "+38118364625",
+      "title" : "Železnička stanica"
+    }, {
+      "description" : "Međumesna autobuska stanica Novog Sada",
+      "id" : 23,
+      "number" : "0901111021",
+      "title" : "Autobuska stanica",
+      "website" : "http://www.gspns.co.rs/"
+    }, {
+      "description" : "Želeynice Srbije, stanica Novi Sad",
+      "id" : 24,
+      "number" : "+38121443200",
+      "title" : "Železnička stanica",
+      "website" : "http://www.zeleznicesrbije.com/"
+    }, {
+      "address" : "Železnička 4",
+      "description" : "Beogradska autobuska stanica",
+      "id" : 25,
+      "number" : "+381112636299",
+      "title" : "Autobuska stanica",
+      "website" : "http://www.bas.rs/"
+    }, {
+      "address" : "Savski trg 2",
+      "description" : "Železnice Srbije, stanica Beograd",
+      "id" : 26,
+      "number" : "+38118364625",
+      "title" : "Železnička stanica",
+      "website" : "http://www.zeleznicesrbije.com/"
+    } ],
+    "profiles" : {
+      "0" : {
+        "checked" : false,
+        "email" : "mak@gmail.com",
+        "firstName" : "Zoki",
+        "id" : 1,
+        "lastName" : "Rodić",
+        "message" : "Brate, hajde molim te dodji!",
+        "phone" : "+381451131313",
+        "title" : "Brat"
+      },
+      "2" : {
+        "checked" : false,
+        "email" : "paja@gmail.com",
+        "firstName" : "Paja",
+        "id" : 2,
+        "lastName" : "Pajtić",
+        "message" : "Ako si blizu, navrati",
+        "phone" : "+3821321",
+        "title" : "Mali"
+      },
+      "4" : {
+        "checked" : true,
+        "email" : "email@gmail.com",
+        "firstName" : "Name",
+        "id" : 4,
+        "lastName" : "Name",
+        "message" : "Pomoc",
+        "phone" : "3218485",
+        "title" : "Novi Profil"
+      },
+      "-KmuDk5vN_HWPV_6wNIc" : {
+        "checked" : false,
+        "email" : "email@gmail.com",
+        "firstName" : "Name",
+        "id" : 4,
+        "lastName" : "Name",
+        "message" : "Pomoc",
+        "phone" : "3218485",
+        "title" : "Novi Profil"
+      }
+    },
+    "texts" : [ {
+      "description" : "Nekoliko ključnih stvari može činiti bit borbe za preživljavanje.",
+      "id" : 1,
+      "image" : 2130837640,
+      "text" : "Nekoliko ključnih stvari može činiti bit borbe za preživljavanje.\nZa to je potrebno prikupiti stvari prikazane na slici 1. Sve one\nmogu se smjestiti u malu torbicu (kutiju i sl.) ili kutiju za\ncigarete (tabakeru), koja je teško uočljiva. Stvorite naviku da\nuvijek imate pribor uz sebe. Ne birajte ništa veliko jer može\nbiti neprikladno za nošenje, a tada najpotrebnije stvari mogu\nostati zaboravljene kod kuće. Mnogi ljudi koji sami savijaju\ncigarete imaju takve kutijice. No ova naša tabakera mnogo je\nkorisnija, tako reći, može Vam spasiti život, dok pušači kreću\nprema kraju svojega. Iskustva su pokazala da svaki dio\npribora zaslužuje svoje mjesto, iako je ponekad neki dio\nkorisniji u nekim situacijama nego drugi: udice za ribe, na\nprimjer, mogu biti nekorisne u džungli, ali su vrlo korisne u\npustinji.",
+      "topic" : "Pribor za preživljavanje"
+    }, {
+      "description" : "Nož je nezamjenjiv i neophodan u slučajevima preživljavanja.",
+      "id" : 2,
+      "image" : 2130837638,
+      "text" : "Nož je nezamjenjiv i neophodan u slučajevima preživljavanja. Ozbiljni avanturisti sigurno će imati\nbarem jedan uz sebe. Noževi su svakako opasni i mogu poslužiti kao oružje. Prilikom putovanja, a\nposebice avionom, treba biti dobro zapakiran i neprimjetan (zajedno sa pilotskom i avionskom opremom)\nte ga nije uputno vaditi u napetim i nezgodnim situacijama.\nIzbor noža\nSklapajući nož sa više oštrica je koristan pribor, ali ako se namjerava nositi samo jedan nož,\nnajbolji je višenamjenski nož, koji će zadovoljiti sve potrebe efikasno i lako: od rezanja tanjih grana do\nguljenja životinja i pripreme namirnica. Neki noževi imaju u svojoj dršci i kompas ili im je kompletna drška\nšuplja tako da u nju stane i nešto od pribora za preživljavanje. U svakom slučaju te varijante zavisit će od\nizdržljivosti šuplje drške, a kompas bi mogao brzo izgubiti svoju preciznost, nakon što bi se nožem\nzasijecala tvrđa drveća. Ako se slučajno takav nož izgubi, izgubio se i pribor za preživljavanje.",
+      "topic" : "Noževi"
+    }, {
+      "description" : "Pri suočavanju sa kriznim situacijama najlakše je prepustiti se, doživjeti slom i sažaljevati se.",
+      "id" : 3,
+      "image" : 2130837634,
+      "text" : "Pri suočavanju sa kriznim situacijama najlakše je prepustiti se, doživjeti slom i sažaljevati se.\nNema nikakve koristi predavati se i \"zakapati glavu u pijesak\", nadati se da je to samo ružan san koji će\nuskoro proći. Neće proći, a sa takvim razmišljanjem situacija će se još i pogoršavati. Samo pozitivan stav i\ndjelovanje su spas. Zdrava i dobro hranjena osoba može se fizički postaviti pred veliku dilemu, brinući se\no samopovjerenju. Čak i bolesna, ranjena te neodlučna osoba, može sigurno proći kroz takvu situaciju i\noporaviti se. Da bi tako bilo postoje određene stresne situacije koje treba prevladati.\nStresovi preživljavanja\nSituacija preživljavanja stavit će Vas pod fizički i psihički pritisak. Morat ćete prebroditi neke ili sve\nod navedenih stresova:\n- strah i uznemirenost;\n- bol, bolest i ranjavanje;\n- hladnoća i / ili vrućina;\n- žeđ, glad i umor;\n- lišavanje sna (nesanica);\n- dosada;\n- samoća i izolacija.\nDa li ste dorasli svemu tome ? Morate biti.",
+      "topic" : "Suočavanje sa kriznim situacijama"
+    }, {
+      "description" : "Voda je jedan od bitnih elemenata za život",
+      "id" : 4,
+      "image" : 2130837646,
+      "text" : "Voda je jedan od bitnih elemenata za život. Cijeli život praktički ovisi o vodi i svako živo biće je\nnosi u sebi. Prosječan čovjek može preživjeti tri tjedna bez hrane, ali samo tri dana bez vode.\nVoda je prioritet broj jedan. Nemojte čekati da Vam nestanu zalihe vode, a da je prije niste pokušali\nnegdje pronaći. Pohranite ono što imate i počnite što je moguće prije tražiti izvore za stvaranje novih\nzaliha. Poželjna je svježa izvorska voda, iako sve vrste voda mogu biti sterilizirane kuhanjem ili uporabom\nkemijskih prečistača. Tijelo čovjeka sadrži 75 % vode. Ona je održavatelj organizma pri svim\ntemperaturama, potrebna je pri održavanju bubrežne funkcije koja eliminira otpadne tvari te je u neku ruku\ni vodič za živčane impulse. Tekućine u organizmu su ograničene. Gubitak vode u organizmu mora biti\nnadomješten ili će stradati Vaše zdravlje i snaga.\nGubitak vode\nProsječan čovjek gubi 2 - 3 litre vode svaki dan, čak i oni koji se u hladu odmaraju gube 1 litru\nvode. Samo disanjem se gubi tekućina, a gubitak putem disanja i znojenja nastaje u međusobnom omjeru\nrada i okolne temperature. Povraćanje i proljev zbog bolesti uzrokuju daljnji gubitak tekućine. Sve to mora\nbiti nadomješteno kako se ne bi poremetila ravnoteža vode; bilo vodom za piće ili vodom iz hrane.",
+      "topic" : "Voda"
+    }, {
+      "description" : "Korijenje drveća i biljaka upija vlagu iz zemlje, premda drveće može upijati i vodu korijenjem.",
+      "id" : 5,
+      "image" : 2130837633,
+      "text" : "Korijenje drveća i biljaka upija vlagu iz zemlje.\ndoseže vodene \"ploče\" (površine) na dubini od otprilike 15 metara, što je inače preduboko za kopanje. To\nnemojte niti pokušavati. Pustite neka drvo izvlači vodu i vlagu, a Vi zavežite plastičnu vreću oko grane s\nlišćem. Isparavanje iz listova proizvest će kondenzaciju i kapljice kondenzata sakupljat će se u dnu vreće.\nIzaberite zdravu vegetaciju i bujne grane. Za granu privežite usta vreće kako bi donji kutevi vreće visjeli\nprema dolje gdje će se sakupljati kondenzirana tekućina.\nStavljanje najlonske vrećice preko bilo kakve vegetacije na zemlji, također će sakupljati vlagu dobivenu\nisparavanjem\nObjesite vrećicu sa vrha ili poduprite štapom. Ne dozvolite da lišće dodiruje stijenke vrećice jer će\npokupiti kondenzirane kapi vode koje bi se trebale sakupljati u ispod napravljen kanalić obložen folijom.\nČak i odsječena vegetacija može proizvesti kondenzaciju kada se,stavljena u prostranu vreću, zagrije.\nLišće bilja treba odmaknuti od tla s kamenjem tako da se voda sakuplja ispod biljke i isto tako ne dozvoliti\nda lišće dodiruje vreću. Oblikujte vrh vrećice, podupirući je štapom (iznutra). Uredite vrećicu sa neznatnim",
+      "topic" : "Kondenzacija"
+    }, {
+      "description" : "Većinu malog plena lakše je uloviti u zamku nego poći u lov na njih.",
+      "id" : 6,
+      "image" : 2130837647,
+      "text" : "Većinu malog plema lakše je uloviti u zamku nego poći u lov na njih. Ako lovite\nmale životinje potrebne su relativno male zamke koje se lako mogu prikriti. Lov zamkama zahtijeva manje\nvještine, što ostavlja dovoljno vremena za potragu za drugom hranom. Uvijek budite spremni kada imate\nprednost i priliku uloviti životinju koja miruje. Puno je poznatih zamki koje rade na principu kompliciranih\nmehanizama. Za njih treba vremena u postavljanju, što zahtijeva dodatni fizički napor. Čovjeku za\npreživljavanje trebaju jednostavne zamke, lagane za konstrukciju i pamćenje načina izrade. Kako bilo,\nzato što svaka životinja ima drugo stanište, bitne su sve vrste i oblici zamki. Ako jedna zamka zakaže, za\nnju postoji i druga varijanta, što se iznalazi na temelju pokusa i pogrešaka.\nOsobna prevencija (zaštita) čovjeka u preživljavanju, mora imati prednost nad humanitarnim\nprincipima i na žalost neke od lakših zamki mogu uzrokovati patnju i mučenje životinje. Zamke koje će\nbrzo usmrtiti plijen kojem su namijenjene, možda davljenjem, mogu uloviti drugu životinju, na primjer, uz\npomoć grane drveta od koje je konstruirana i ostaviti je da se muči satima. Povremena i redovita provjera\nzamki je bitna. Ostavljajući zamku neprovjerenu, mučenje životinje može se produžiti, a tako i rizik da ulov\nukrade životinja grabljivica, odnosno da se životinja lako oslobodi. Neke životinje moći će uništiti zamku ili\nučiniti sve da se iz nje izvuku. Većina grešaka može se izbjeći proučavanjem životinjskih staništa. Također\nje važan izbor mamca i mjesta za zamku. Ako jedna zamka ne uspije, pokušajte s drugom. BUDITE\nSTRPLJIVI. Za lov zamkom treba dosta vremena. I životinje mogu biti vrlo sumnjičave u prvo vrijeme, ali\nse kasnije toga oslobode i ulete ravno u zamku. Čak i kada ste u pokretu, nekoliko jednostavnih zamki\nkoje se preko noći mogu postaviti, donijet će rezultate, a kada ćete raditi privremeni tabor, možete\npostaviti cijeli \"lanac\" zamki. Što ih više postavite, veće su i šanse za ulov. Postavite što veći lanac zamki,\nkoliko možete nadzirati to područje.",
+      "topic" : "Zamke"
+    }, {
+      "description" : "Jasno opažanje znakova divljeg života i poznavanje životinja koje lovite potrebno je lovcu.",
+      "id" : 7,
+      "image" : 2130837635,
+      "text" : "Jasno opažanje znakova divljeg života i poznavanje životinja koje lovite potrebno je lovcu koliko i\nvješto traganje i označavanje na području. To olakšava čovjeku da se snađe na pravom mjestu i stekne\nprednost na terenu. Po terenu se valja kretati što nečujnije, polako te povremeno zastati. Težinu tijela\nprebacujte na onu nogu kojom ne iskoračujete, tako da možete procijeniti slijedeći korak, odnosno\npodlogu na koju ćete stati prije nego prebacite težinu. Tako se izbjegava spoticanje i smanjuje buka\ngaženja po raslinju i lomljenja grančica. Brzo i iznenadno kretanje preplašit će divljač. Njušite zrak i\nosluškujte. Lovite u smjeru suprotnom od vjetra, a ako baš morate, krećite se bočno od smjera vjetra.\nIdealno vrijeme za lov je u zoru kada je većina divljači troma. Životinje su također tromije u predvečerje, ali\nisto tako se smanjuje dnevna svjetlost te tako morate biti sigurni da poznajete teren i put natrag do svoga\ntabora. U području koje dobro poznajete to neće biti problem, pogotovo ako je noću nebo vedro i ako je\nmjesečina, odnosno kada je vidljivost dosta dobra.\nAko lovite noću, krenite najmanje jedan sat prije sumraka tako da se oči priviknu na smanjenje\nsvjetlosti i na noćne uvjete - premda će životinje najvjerojatnije bolje vidjeti od Vas. Kada lovite po danu,\npokušajte se kretati uzbrdo ujutro (ako je takva konfiguracija terena) i vraćati se u tabor poslijepodne.\nPromatranje životinjskih tragova bit će lakše ako se krećete uzbrdo jer su tako tragovi bliži razini očiju.\nToplotne struje pod zemljom potpomognute toplinom tijekom dana nose miris divljači prema gore te tako\npri povratku nizbrdo nailazite na taj miris. Nakon isteka dana, lova i traganja, silaženje oduzima manje\nenergije nego penjanje uzbrdo te ćete se lakše kretati.\nAko se krećete ispravno, u većini slučajeva divljač Vas neće primijetiti. Ako Vas životinja načas\nopazi, ostanite na mjestu. Možda ste prvi čovjek kojeg je životinja vidjela i bit će više radoznala nego\nuplašena. Ostanite mirni i nepomični sve dok divljač ne skrene pogled ili se nastavi hraniti. Izbjegavajte\nvelike životinje kao što su medvjedi, osim ako ste čvrsto uvjereni da ih možete ubiti prvim pogotkom: u\nprotivnom postat ćete lovina umjesto lovca.\nPribližite se što je više moguće bez otkrivanja svoje nazočnosti te zauzmite čvrstu i sigurnu\npoziciju, koja pruža pogled na šire područje. Direktan pogodak u glavu životinje vrlo je učinkovit, ali i\nriskantan osim ako ste blizu životinji koja miruje. Ciljanje straga u prednji dio ramena, dobra je meta. Čvrst\ni precizan udarac, bacit će većinu životinja. Loš udarac može značiti nepotrebnu agoniju životinje i dug put\nkojim ćete je potom slijediti. Ako životinja padne nakon prvog udarca, pričekajte pet minuta prije nego se\npribližite. Ostanite na mjestu i promatrajte. Ako životinja nije mrtva, a krvari, gubitak krvi dodatno će je\noslabiti, a kada se približite ona neće biti u stanju pobjeći. Ako je životinja ranjena i nastavlja se kretati,\npričekajte 15 minuta prije nego je počnete slijediti. Ako krenete odmah za njom može se desiti da ćete je\nslijediti cijeli dan.",
+      "topic" : "Lov"
+    }, {
+      "description" : "Luk i strijela\nNajučinkovitiji su od improviziranog oružja.",
+      "id" : 8,
+      "image" : 2130837639,
+      "text" : "Luk i strijela\nNajučinkovitiji su od improviziranog oružja. Luk i strijelu je lako napraviti. Potrebno je malo\nvremena za postizanje vještine rukovanja. Najbolje drvo za luk je tzv. “sezonsko”, što ne znači da ćete\nuvijek uspješno izraditi luk od takvog drveta. Ako namjeravate na nekom području ostati nekoliko mjeseci,\nsezonsko drvo može zastarjeti, odnosno preživjeti sezonu, stoga je poželjno napraviti nekoliko lukova od\nrazličitog drveta u sezoni, pošto ona koja su zastarjela gube svoju elastičnost.\nZa takve prilike četinjače su idealne - svi stari engleski lukovi načinjeni su od takve vrste drveta. Postoji\npet vrsta četinjača koje se distribuiraju sjevernom hemisferom, ali između sebe nemaju puno zajedničkog.\nZimzeleno drvo, hrast, bijeli brijest, cedar, breza, vrba i kukuta su za to dobar nadomjestak.",
+      "topic" : "Oružje"
+    } ]
+  }
+}
