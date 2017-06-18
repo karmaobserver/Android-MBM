@@ -52,9 +52,7 @@ import java.util.ArrayList;
         GoogleMap.OnMapClickListener
     {
 
-        private static final LatLng DARWIN = new LatLng(-12.4258647, 130.7932231);
-        private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
-        private static final int INITIAL_STROKE_WIDTH_PX = 5;
+
         private GoogleMap mMap;
         private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
         private boolean mPermissionDenied = false;
@@ -64,7 +62,7 @@ import java.util.ArrayList;
         Polyline line;
         SharedPreferences sharedPreferences;
         int locationCount = 0;
-        Polyline polylineFinal;
+        boolean myLocation = false;
         PendingIntent pendingIntent;
 
     @Override
@@ -210,6 +208,7 @@ import java.util.ArrayList;
 
         // Getting stored zoom level if exists else return 0
         String zoom = sharedPreferences.getString("zoom", "0");
+        String zoom1 = sharedPreferences.getString("zoom1", "0");
 
         // If locations are already saved
         if(locationCount!=0){
@@ -238,6 +237,12 @@ import java.util.ArrayList;
 
             // Setting the zoom level in the map on last position  is clicked
             mMap.animateCamera(CameraUpdateFactory.zoomTo(Float.parseFloat(zoom)));
+        }
+        else{
+
+            //todo maybe
+
+
         }
 
 
@@ -356,6 +361,13 @@ import java.util.ArrayList;
         @Override
         public void onMapLongClick(LatLng latLng) {
 
+            Intent proximityIntent = new Intent("com.mbm.ftn.mbm.activity.proximity");
+            proximityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, proximityIntent,0);
+
+            // Removing the proximity alert
+            locationManager.removeProximityAlert(pendingIntent);
 
             // Removing the marker and circle from the Google Map
             mMap.clear();
@@ -368,9 +380,6 @@ import java.util.ArrayList;
 
             // Committing the changes
             editor.commit();
-
-            // Setting locationCount to zero
-            locationCount=0;
 
 
         }
