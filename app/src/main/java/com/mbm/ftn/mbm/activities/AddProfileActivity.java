@@ -108,13 +108,13 @@ public class AddProfileActivity extends BaseActivity {
 
         Intent intent = new Intent(this, ProfilesActivity.class);
         startActivity(intent);
-        Toast.makeText(getBaseContext(), "Create profile succeed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.create_succeed), Toast.LENGTH_LONG).show();
         finish();
 
     }
 
     private void onCreateFailed() {
-        Toast.makeText(getBaseContext(), "Create profile failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.create_failed), Toast.LENGTH_LONG).show();
         Button createButton = (Button) findViewById(R.id.button_create_profile);
         createButton.setEnabled(true);
     }
@@ -139,47 +139,45 @@ public class AddProfileActivity extends BaseActivity {
         profileDao = new ProfileDao(this);
         boolean titleExist = profileDao.checkIfTitleExist(title);
         if (title.isEmpty() || title.length() > 30) {
-            inputTitle.setError("from 1 to at most 30 characters");
+            inputTitle.setError(getResources().getString(R.string.char1to30));
             valid = false;
         } else if (titleExist){
-            Log.d("USAO", "ad");
-            inputTitle.setError("Title already exists!");
+            inputTitle.setError("Naslov već postoji");
             valid = false;
         } else {
-            Log.d("NIJE", "ad");
             inputTitle.setError(null);
         }
 
         if (firstName.isEmpty() || firstName.length() >30) {
-            inputFirstName.setError("from 1 to at most 30 characters");
+            inputFirstName.setError(getResources().getString(R.string.char1to30));
             valid = false;
         } else {
             inputFirstName.setError(null);
         }
 
         if (lastName.isEmpty() || lastName.length() >30) {
-            inputLastName.setError("from 1 to at most 30 characters");
+            inputLastName.setError(getResources().getString(R.string.char1to30));
             valid = false;
         } else {
             inputLastName.setError(null);
         }
 
         if (phone.isEmpty() || phone.length() >30) {
-            inputPhone.setError("from 1 to at most 30 characters");
+            inputPhone.setError(getResources().getString(R.string.char1to30));
             valid = false;
         } else {
             inputPhone.setError(null);
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            inputEmail.setError("enter a valid email address");
+            inputEmail.setError(getResources().getString(R.string.valid_email));
             valid = false;
         } else {
             inputEmail.setError(null);
         }
 
         if (message.isEmpty() || message.length() >200) {
-            inputMessage.setError("from 1 to at most 30 characters");
+            inputMessage.setError(getResources().getString(R.string.char1to30));
             valid = false;
         } else {
             inputMessage.setError(null);

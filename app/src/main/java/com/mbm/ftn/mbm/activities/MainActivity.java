@@ -176,25 +176,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
 
-            case R.id.action_gps:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
 
     private void databaseInit() {
 
@@ -204,9 +186,9 @@ public class MainActivity extends AppCompatActivity {
         survivalTextDao = new SurvivalTextDao(this);
         profileDao = new ProfileDao(this);
 
-        Profile profile1 = new Profile("BRAT", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Pomagaj brate!!!", false);
-        Profile profile2 = new Profile("Ćale", "Paja", "Pajtić", "+3821321", "paja@gmail.com", "Pomagaj ćale!!!", false);
-        Profile profile3 = new Profile("FBI", "Frobi", "Fbić", "+38199977777", "fbi@gmail.com", "Dje ste Ameri?!", false);
+        Profile profile1 = new Profile("Brat", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Brate, hajde molim te dodji!", false);
+        Profile profile2 = new Profile("Mali problem", "Paja", "Pajtić", "+3821321", "paja@gmail.com", "Ako si blizu, navrati", false);
+        Profile profile3 = new Profile("Veliki problem", "Frobi", "Fbić", "+38199977777", "fbi@gmail.com", "U velikoj sam opasnosti, molim vas, dodjite da mi pomognete", false);
 
         profileDao.create(profile1);
         profileDao.create(profile2);
