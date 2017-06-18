@@ -26,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "MbmDB.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 154;
+    private static final int DATABASE_VERSION = 155;
 
     // the DAO object we use to access the SimpleData table
     //pressure
