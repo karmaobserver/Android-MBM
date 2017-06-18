@@ -21,11 +21,13 @@ import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.dao.CityDao;
 import com.mbm.ftn.mbm.dao.NumberDao;
 import com.mbm.ftn.mbm.dao.NumberListDao;
+import com.mbm.ftn.mbm.dao.NumbersInLIstsDao;
 import com.mbm.ftn.mbm.dao.ProfileDao;
 import com.mbm.ftn.mbm.dao.SurvivalTextDao;
 import com.mbm.ftn.mbm.database.DatabaseManager;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
+import com.mbm.ftn.mbm.models.NumberInList;
 import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.models.SurvivalText;
@@ -41,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
     CityDao cityDao = null;
     ProfileDao profileDao = null;
     SurvivalTextDao survivalTextDao = null;
+    NumbersInLIstsDao numberInListDao = null;
     List<SurvivalText> textList = new ArrayList<SurvivalText>();
     List<Number> numberList = new ArrayList<Number>();
     List<NumberList> numberListList = new ArrayList<NumberList>();
     List<City> cityList = new ArrayList<City>();
     List<Profile> profileList = new ArrayList<Profile>();
+    List<NumberInList> numberInListList = new ArrayList<NumberInList>();
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -203,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
         cityDao = new CityDao(this);
         survivalTextDao = new SurvivalTextDao(this);
         profileDao = new ProfileDao(this);
+        numberInListDao = new NumbersInLIstsDao(this);
 
         Profile profile1 = new Profile("BRAT", "Zoki", "Rodić", "+381451131313", "mak@gmail.com", "Pomagaj brate!!!", false);
         Profile profile2 = new Profile("Ćale", "Paja", "Pajtić", "+3821321", "paja@gmail.com", "Pomagaj ćale!!!", false);
@@ -234,55 +239,50 @@ public class MainActivity extends AppCompatActivity {
 
         NumberList emergencyList = new NumberList("Hitne službe");
         numberListDao.create(emergencyList);
-        Number number1 = new Number("Hitna pomoć", "194", "Hitne intervencije hitne pomoći", emergencyList, null, null, city3);
-        Number number2 = new Number("Policija", "192", "Hitne intervencije policije", emergencyList, null, null, city3);
-        Number number3 = new Number("Vatrogasci", "193", "Vatrogasna služba", emergencyList, null, "Omladinskih brigada 1, Beograd", city3);
-        Number number4 = new Number("Gorska služba", "+38163466466", "Gorska služba spašavanja", emergencyList, "http://www.gss.rs/", null, city3);
-
-
-        NumberList mobileOperatorsList = new NumberList("Mobilna telefonija");
-        numberListDao.create(mobileOperatorsList);
-        Number number5 = new Number("Vip mobile", "+381601234", null, mobileOperatorsList, "https://www.vipmobile.rs/privatni", "Omladinskih brigada 21, Beograd", city3);
-        Number number6 = new Number("Telenor", "+3816390000", null, mobileOperatorsList, "https://www.telenor.rs/", "Omladinskih brigada 90, Beograd", city3);
-        Number number7 = new Number("MTS", "+38164789", null, mobileOperatorsList, "https://www.mts.rs/", "Branislava Nusića", city3);
-
-
-        NumberList healthCare = new NumberList("Zdravstvo");
-        numberListDao.create(healthCare);
-        Number number8 = new Number("Dom zdravlja Liman", "+381214807187", null, healthCare, null, null, city2);
-        Number number9 = new Number("Dom zdravlja bistrica", "+38121401122", null, healthCare, null, null, city2);
-        Number number10 = new Number("Kliničko bolnički centar", "+381214843484", null, healthCare, null, null, city2);
-        Number number11 = new Number("Dečja bolnija", "+38121422699", "Bolnica za decu", healthCare, null, null, city2);
-        Number number12 = new Number("Dispanzer", "+38121422699", null, healthCare, null, null, city2);
-        Number number13 = new Number("Klinika za akušerstvo i ginekologiju", "+381214899222", null, healthCare, null, null, city2);
-        Number number14 = new Number("Higijenski Zavod", "+38121422255", "Bolnica za decu", healthCare, null, null, city2);
-        Number number15 = new Number("Noćna ambulanta Zemun", "+381112600192", "Svakog dana 19:00-07:00", healthCare, null, "Karađorđev trg 4", city1);
-        Number number16 = new Number("Dežurna apoteka  Prvi Maj", "+381112643170", "svakog dana 00:00-24:00", healthCare, null, "Kralja Milana 9", city1);
-        Number number17 = new Number("KBC Zvezdara", "+381113806969", null, healthCare, "http://www.kbczvezdara.rs/", "Dimitrija Tucovića 161", city1);
-
-        NumberList transport = new NumberList("Saobraćaj");
-        numberListDao.create(transport);
-        Number number18 = new Number("Automoto Savez Srbije", "987", "Pomoć na putu, stanje na putevima, međunarodna dokumenta, saobraćajna...", transport, "http://www.amss.org.rs/", "Ruzveltova 18, Zvezdara", city3);
-        Number number19 = new Number("Aerodorom Nikola Tesla", "+381112094444", null, transport, "http://www.beg.aero/", "Beograd", city3);
-        Number number20 = new Number("Aerodrom Konstantin Veliki", "+38118585858", null, transport, "http://nis-airport.com/en/", "Vazduhoplovaca 24", city3);
-        Number number21 = new Number("Autobuska stanica", "+38118255177", null, transport, null, null, city4);
-        Number number22 = new Number("Železnička stanica", "+38118364625", null, transport, null, null, city4);
-        Number number23 = new Number("Autobuska stanica", "0901111021", "Međumesna autobuska stanica Novog Sada", transport, "http://www.gspns.co.rs/", null, city2);
-        Number number24 = new Number("Železnička stanica", "+38121443200", "Želeynice Srbije, stanica Novi Sad", transport, "http://www.zeleznicesrbije.com/", null, city2);
-        Number number25 = new Number("Autobuska stanica", "+381112636299", "Beogradska autobuska stanica", transport, "http://www.bas.rs/", "Železnička 4", city1);
-        Number number26 = new Number("Železnička stanica", "+38118364625", "Železnice Srbije, stanica Beograd", transport, "http://www.zeleznicesrbije.com/", "Savski trg 2", city1);
-
-        numberListList.add(mobileOperatorsList);
-        numberListList.add(healthCare);
-        numberListList.add(transport);
+        Number number1 = new Number("Hitna pomoć", "194", "Hitne intervencije hitne pomoći", null, null, city3);
+        Number number2 = new Number("Policija", "192", "Hitne intervencije policije", null, null, city3);
+        Number number3 = new Number("Vatrogasci", "193", "Vatrogasna služba", null, "Omladinskih brigada 1, Beograd", city3);
+        Number number4 = new Number("Gorska služba", "+38163466466", "Gorska služba spašavanja", "http://www.gss.rs/", null, city3);
 
         numberDao.create(number1);
         numberDao.create(number2);
         numberDao.create(number3);
         numberDao.create(number4);
+
+        NumberInList n1 = new NumberInList(number1.getId(), emergencyList.getId());
+        NumberInList n2 = new NumberInList(number2.getId(), emergencyList.getId());
+        NumberInList n3 = new NumberInList(number3.getId(), emergencyList.getId());
+        NumberInList n4 = new NumberInList(number4.getId(), emergencyList.getId());
+
+
+        NumberList mobileOperatorsList = new NumberList("Mobilna telefonija");
+        numberListDao.create(mobileOperatorsList);
+        Number number5 = new Number("Vip mobile", "+381601234", null, "https://www.vipmobile.rs/privatni", "Omladinskih brigada 21, Beograd", city3);
+        Number number6 = new Number("Telenor", "+3816390000", null, "https://www.telenor.rs/", "Omladinskih brigada 90, Beograd", city3);
+        Number number7 = new Number("MTS", "+38164789", null, "https://www.mts.rs/", "Branislava Nusića", city3);
+
         numberDao.create(number5);
         numberDao.create(number6);
         numberDao.create(number7);
+
+        NumberInList n5 = new NumberInList(number5.getId(), mobileOperatorsList.getId());
+        NumberInList n6 = new NumberInList(number6.getId(), mobileOperatorsList.getId());
+        NumberInList n7 = new NumberInList(number7.getId(), mobileOperatorsList.getId());
+
+
+        NumberList healthCare = new NumberList("Zdravstvo");
+        numberListDao.create(healthCare);
+        Number number8 = new Number("Dom zdravlja Liman", "+381214807187", null, null, null, city2);
+        Number number9 = new Number("Dom zdravlja bistrica", "+38121401122", null, null, null, city2);
+        Number number10 = new Number("Kliničko bolnički centar", "+381214843484", null, null, null, city2);
+        Number number11 = new Number("Dečja bolnija", "+38121422699", "Bolnica za decu", null, null, city2);
+        Number number12 = new Number("Dispanzer", "+38121422699", null, null, null, city2);
+        Number number13 = new Number("Klinika za akušerstvo i ginekologiju", "+381214899222", null, null, null, city2);
+        Number number14 = new Number("Higijenski Zavod", "+38121422255", "Bolnica za decu", null, null, city2);
+        Number number15 = new Number("Noćna ambulanta Zemun", "+381112600192", "Svakog dana 19:00-07:00", null, "Karađorđev trg 4", city1);
+        Number number16 = new Number("Dežurna apoteka  Prvi Maj", "+381112643170", "svakog dana 00:00-24:00", null, "Kralja Milana 9", city1);
+        Number number17 = new Number("KBC Zvezdara", "+381113806969", null, "http://www.kbczvezdara.rs/", "Dimitrija Tucovića 161", city1);
+
         numberDao.create(number8);
         numberDao.create(number9);
         numberDao.create(number10);
@@ -293,6 +293,30 @@ public class MainActivity extends AppCompatActivity {
         numberDao.create(number15);
         numberDao.create(number16);
         numberDao.create(number17);
+
+        NumberInList n8 = new NumberInList(number8.getId(), healthCare.getId());
+        NumberInList n9 = new NumberInList(number9.getId(), healthCare.getId());
+        NumberInList n10 = new NumberInList(number10.getId(), healthCare.getId());
+        NumberInList n11 = new NumberInList(number11.getId(), healthCare.getId());
+        NumberInList n12 = new NumberInList(number12.getId(), healthCare.getId());
+        NumberInList n13 = new NumberInList(number13.getId(), healthCare.getId());
+        NumberInList n14 = new NumberInList(number14.getId(), healthCare.getId());
+        NumberInList n15 = new NumberInList(number15.getId(), healthCare.getId());
+        NumberInList n16 = new NumberInList(number16.getId(), healthCare.getId());
+        NumberInList n17 = new NumberInList(number17.getId(), healthCare.getId());
+
+        NumberList transport = new NumberList("Saobraćaj");
+        numberListDao.create(transport);
+        Number number18 = new Number("Automoto Savez Srbije", "987", "Pomoć na putu, stanje na putevima, međunarodna dokumenta, saobraćajna...", "http://www.amss.org.rs/", "Ruzveltova 18, Zvezdara", city3);
+        Number number19 = new Number("Aerodorom Nikola Tesla", "+381112094444", null, "http://www.beg.aero/", "Beograd", city3);
+        Number number20 = new Number("Aerodrom Konstantin Veliki", "+38118585858", null, "http://nis-airport.com/en/", "Vazduhoplovaca 24", city3);
+        Number number21 = new Number("Autobuska stanica", "+38118255177", null, null, null, city4);
+        Number number22 = new Number("Železnička stanica", "+38118364625", null, null, null, city4);
+        Number number23 = new Number("Autobuska stanica", "0901111021", "Međumesna autobuska stanica Novog Sada", "http://www.gspns.co.rs/", null, city2);
+        Number number24 = new Number("Železnička stanica", "+38121443200", "Želeynice Srbije, stanica Novi Sad", "http://www.zeleznicesrbije.com/", null, city2);
+        Number number25 = new Number("Autobuska stanica", "+381112636299", "Beogradska autobuska stanica", "http://www.bas.rs/", "Železnička 4", city1);
+        Number number26 = new Number("Železnička stanica", "+38118364625", "Železnice Srbije, stanica Beograd", "http://www.zeleznicesrbije.com/", "Savski trg 2", city1);
+
         numberDao.create(number18);
         numberDao.create(number19);
         numberDao.create(number20);
@@ -302,6 +326,49 @@ public class MainActivity extends AppCompatActivity {
         numberDao.create(number24);
         numberDao.create(number25);
         numberDao.create(number26);
+
+        NumberInList n18 = new NumberInList(number18.getId(), transport.getId());
+        NumberInList n19 = new NumberInList(number19.getId(), transport.getId());
+        NumberInList n20 = new NumberInList(number20.getId(), transport.getId());
+        NumberInList n21 = new NumberInList(number21.getId(), transport.getId());
+        NumberInList n22 = new NumberInList(number22.getId(), transport.getId());
+        NumberInList n23 = new NumberInList(number23.getId(), transport.getId());
+        NumberInList n24 = new NumberInList(number24.getId(), transport.getId());
+        NumberInList n25 = new NumberInList(number25.getId(), transport.getId());
+        NumberInList n26 = new NumberInList(number26.getId(), transport.getId());
+
+        numberInListList.add(n1);
+        numberInListList.add(n2);
+        numberInListList.add(n3);
+        numberInListList.add(n4);
+        numberInListList.add(n5);
+        numberInListList.add(n6);
+        numberInListList.add(n7);
+        numberInListList.add(n8);
+        numberInListList.add(n9);
+        numberInListList.add(n10);
+        numberInListList.add(n11);
+        numberInListList.add(n12);
+        numberInListList.add(n13);
+        numberInListList.add(n14);
+        numberInListList.add(n15);
+        numberInListList.add(n16);
+        numberInListList.add(n17);
+        numberInListList.add(n18);
+        numberInListList.add(n19);
+        numberInListList.add(n20);
+        numberInListList.add(n21);
+        numberInListList.add(n22);
+        numberInListList.add(n23);
+        numberInListList.add(n24);
+        numberInListList.add(n25);
+        numberInListList.add(n26);
+
+        numberListList.add(mobileOperatorsList);
+        numberListList.add(healthCare);
+        numberListList.add(transport);
+
+
 
         numberList.add(number1);
         numberList.add(number2);
@@ -507,6 +574,7 @@ public class MainActivity extends AppCompatActivity {
         firebase.child("numberLists").removeValue();
         firebase.child("cities").removeValue();
         firebase.child("profiles").removeValue();
+        firebase.child("numberListList").removeValue();
 
         DatabaseReference textDb = firebase.child("texts");
         textDb.setValue(textList);
@@ -522,8 +590,10 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseReference profileListDb = firebase.child("profiles");
         profileListDb.setValue(profileList);
-    }
 
+        DatabaseReference numberListList = firebase.child("numberListList");
+        numberListList.setValue(numberInListList);
+    }
 
     private void firebaseSync() {
 
@@ -694,6 +764,39 @@ public class MainActivity extends AppCompatActivity {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Profile p = dataSnapshot.getValue(Profile.class);
                 profileDao.delete(p);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference numberListListDb = firebase.child("numberListList");
+        numberListListDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                NumberInList nil = dataSnapshot.getValue(NumberInList.class);
+                Number n = (Number) numberDao.findById(nil.getNumberId());
+                NumberList nl = (NumberList) numberListDao.findById(nil.getListId());
+                n.setNumberList(nl);
+                numberDao.update(n);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
             }
 
             @Override

@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mbm.ftn.mbm.models.City;
 import com.mbm.ftn.mbm.models.Number;
+import com.mbm.ftn.mbm.models.NumberInList;
 import com.mbm.ftn.mbm.models.NumberList;
 import com.mbm.ftn.mbm.models.Profile;
 import com.mbm.ftn.mbm.models.SurvivalText;
@@ -25,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "MbmDB.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 143;
+    private static final int DATABASE_VERSION = 154;
 
     // the DAO object we use to access the SimpleData table
     //pressure
@@ -34,6 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<Profile, Integer> profileDao = null;
     private Dao<NumberList, Integer> numberListDao = null;
     private Dao<SurvivalText, Integer> survivalTextDao = null;
+    private Dao<NumberInList, Integer> numberInListDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,6 +49,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, NumberList.class);
             TableUtils.createTable(connectionSource, Number.class);
             TableUtils.createTable(connectionSource, SurvivalText.class);
+            TableUtils.createTable(connectionSource, NumberInList.class);
+
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -86,6 +90,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, NumberList.class, true);
             TableUtils.dropTable(connectionSource, Number.class, true);
             TableUtils.dropTable(connectionSource, SurvivalText.class, true);
+            TableUtils.dropTable(connectionSource, NumberInList.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -151,4 +156,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return numberListDao;
     }
 
+    public Dao<NumberInList, Integer> getNumberInListDao() {
+        if (null == numberInListDao) {
+            try {
+                numberInListDao = getDao(NumberInList.class);
+            }catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return numberInListDao;
+    }
 }
