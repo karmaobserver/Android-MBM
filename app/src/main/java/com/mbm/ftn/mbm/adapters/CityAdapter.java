@@ -84,13 +84,13 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
                 intent.putExtra("city", name.getText().toString());
                 Log.d("CITY", "JE U ADAPTERU " + name.getText().toString());
                 v.getContext().startActivity(intent);
-              /*  android.support.v4.app.FragmentManager fragmentManager = ((cont)parent.getContext()).getSupportFragmentManager();
+
+                /*android.support.v4.app.FragmentManager fragmentManager = ((ImportantNumbersActivity) v.getContext()).getSupportFragmentManager();
                 Fragment prev = fragmentManager.findFragmentByTag("showChooseCityDialogTAG");
                 if (prev != null) {
                     DialogFragment df = (DialogFragment) prev;
                     df.dismiss();
-                }
-*/
+                }*/
 
             }
 

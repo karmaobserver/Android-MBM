@@ -99,8 +99,14 @@ public class SosDialog extends DialogFragment {
         smsImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "SHORT is selected!", Toast.LENGTH_SHORT).show();
-                 /*profileList = profileDao.findAllCheckedProfiles();
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0643748805"));
+                intent.putExtra("sms_body", "Test");
+                startActivity(intent);
+
+                dismiss();
+
+                /*profileList = profileDao.findAllCheckedProfiles();
                 for (Profile profile : profileList) {
 
                 }*/
@@ -111,7 +117,15 @@ public class SosDialog extends DialogFragment {
         emailImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "SHORT is selected!", Toast.LENGTH_SHORT).show();
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","makso.the.one@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SOS");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "TEST");
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+
+
             }
         });
 

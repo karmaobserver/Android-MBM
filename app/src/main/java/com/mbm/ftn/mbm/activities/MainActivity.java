@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseManager.init(this);
         //databaseInit();
         //addToFirebase();
-        //firebaseSync();
+        firebaseSync();
 
         // Display icon in the toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
