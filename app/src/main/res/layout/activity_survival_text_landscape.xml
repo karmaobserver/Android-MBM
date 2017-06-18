@@ -5,16 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/survival_text_fragment"
-        android:name="com.mbm.ftn.mbm.fragments.SurvivalTextListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <fragment
+    <FrameLayout
         android:id="@+id/survival_text_view_fragment"
-        android:name="com.mbm.ftn.mbm.fragments.SurvivalTextViewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

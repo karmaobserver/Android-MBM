@@ -3,17 +3,16 @@ package com.mbm.ftn.mbm.activities;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.mbm.ftn.mbm.R;
 import com.mbm.ftn.mbm.adapters.SurvivalTextAdapter;
 import com.mbm.ftn.mbm.dao.SurvivalTextDao;
+import com.mbm.ftn.mbm.fragments.SurvivalTextListFragment;
+import com.mbm.ftn.mbm.fragments.SurvivalTextViewFragment;
 import com.mbm.ftn.mbm.models.SurvivalText;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Boris K on 25-Apr-17.
@@ -33,10 +32,7 @@ public class SurvivalTextActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
        if (savedInstanceState == null) {
-
-           initGui();
-           //String value = getIntent().getExtras().getString("text");
-
+           initGui(getResources().getConfiguration());
         }
 
     }
@@ -45,27 +41,40 @@ public class SurvivalTextActivity extends BaseActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        initGui(newConfig);
+
     }
+    private void initGui(Configuration newConfig) {
 
-    private void initGui() {
-
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-            Toast.makeText(this, "landscape SurvivalTextActivity", LENGTH_SHORT).show();
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_survival_text_landscape);
+            if (findViewById(R.id.activity_survival_text_landscape) != null){
 
-        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                SurvivalTextListFragment stlf = new SurvivalTextListFragment();
+                stlf.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction().add(R.id.survival_text_fragment, stlf).commit();
 
-            Toast.makeText(this, "portrait SurvivalTextActivity", LENGTH_SHORT).show();
+                SurvivalTextViewFragment stvf = new SurvivalTextViewFragment();
+                stvf.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction().add(R.id.survival_text_view_fragment, stvf).commit();
+            }
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setContentView(R.layout.activity_survival_text_portrait);
+            if (findViewById(R.id.activity_survival_text_portrait) != null){
+
+                SurvivalTextListFragment stlf = new SurvivalTextListFragment();
+                stlf.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction().add(R.id.survival_text_fragment, stlf).commit();
+            }
+
         }
+    }
       /*  Toolbar toolbar = (Toolbar) findViewById(R.id.text_toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setLogo(R.mipmap.ic_important_numbers);
         getSupportActionBar().setTitle("Text Prezivljavanja");
         getSupportActionBar().setDisplayUseLogoEnabled(true);*/
-    }
 
     @Override
     protected void onResume() {

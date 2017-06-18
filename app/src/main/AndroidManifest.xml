@@ -29,7 +29,8 @@
             android:value="@string/google_maps_key" />
 
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+                    android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,7 +67,7 @@
         <activity
             android:name=".activities.TextActivity"
             android:label="@string/title_activity_survival_text"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.SurvivalTextActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

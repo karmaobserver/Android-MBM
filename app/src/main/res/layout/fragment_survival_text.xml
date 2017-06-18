@@ -10,7 +10,7 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:background="@drawable/background_gradient_color"
-        android:padding="3dp"
+        android:padding="3sp"
         android:layout_height="match_parent"/>
 
 </RelativeLayout>

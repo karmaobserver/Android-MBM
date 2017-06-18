@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <fragment android:name="com.mbm.ftn.mbm.fragments.SurvivalTextListFragment"
+    <FrameLayout
         android:id="@+id/survival_text_fragment"
         android:layout_weight="1"
         android:layout_width="match_parent"

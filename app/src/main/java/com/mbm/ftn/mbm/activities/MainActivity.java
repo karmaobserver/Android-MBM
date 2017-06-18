@@ -1,6 +1,7 @@
 package com.mbm.ftn.mbm.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -47,12 +48,34 @@ public class MainActivity extends AppCompatActivity {
     List<Profile> profileList = new ArrayList<Profile>();
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        initGui(newConfig);
+      //  redrawButtons();
+        initButtons();
+    }
+
+    private void redrawButtons() {
+        ImageButton flashlightButton2 = (ImageButton) findViewById(R.id.button_topleft);
+        flashlightButton2.invalidate();
+        ImageButton flashlightButton3 = (ImageButton) findViewById(R.id.button_topright);
+        flashlightButton3.invalidate();
+        ImageButton survivalButton = (ImageButton) findViewById(R.id.button_bottomleft);
+        survivalButton.invalidate();
+        ImageButton importantNumbers = (ImageButton) findViewById(R.id.button_middleright);
+        importantNumbers.invalidate();
+        ImageButton sos = (ImageButton) findViewById(R.id.button_middleleft);
+        sos.invalidate();
+        ImageButton weather = (ImageButton) findViewById(R.id.button_bottomright);
+        weather.invalidate();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //  getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        initGui(getResources().getConfiguration());
 
         //Database init
         DatabaseManager.init(this);
@@ -60,7 +83,12 @@ public class MainActivity extends AppCompatActivity {
         //addToFirebase();
         firebaseSync();
 
-        // Display icon in the toolbar
+        initButtons();
+
+    }
+
+    private void initButtons() {
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -125,6 +153,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void initGui(Configuration configuration) {
+
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+           setContentView(R.layout.activity_main_landscape);
+
+        } else if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setContentView(R.layout.activity_main_portrait);
+        }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
     }
